@@ -18,6 +18,24 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="appsettings.Development.json" />
+    <None Remove="appsettings.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="appsettings.Development.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Bogus" Version="35.4.0" />
     <PackageReference Include="coverlet.msbuild" Version="6.0.1">
       <PrivateAssets>all</PrivateAssets>
@@ -55,7 +73,7 @@
   <Target Name="AfterTest">
     <!-- Check if OS is Windows -->
     <Exec Condition="'$(OS)' == 'Windows_NT'" Command="powershell -File ./coverage_report.ps1" />
-    <!-- Check if OS is Linux 
+    <!-- Check if OS is Linux Base 
     <Exec Condition="'$(OS)' != 'Windows_NT'" Command="bash ./coverage_report.sh" /> 
     -->
   </Target>

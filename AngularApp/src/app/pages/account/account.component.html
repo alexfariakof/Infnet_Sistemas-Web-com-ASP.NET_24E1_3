@@ -1,0 +1,150 @@
+<div class="d-flex align-items-center justify-content-center fs-6 fs-sm-5 fs-md-4 fs-lg-3 bg-dark  ">
+  <form
+    class="d-flex flex-column m-2  b-0 p-2 align-items-center justify-content-center fs-6 fs-sm-5 fs-md-4 fs-lg-3 w-75 rounded-2 bg-dark-subtle text-black"
+    (submit)="onSaveClick()" [formGroup]="createAccountForm">
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Email</mat-label>
+      <input matInput id="email" name="email" formControlName="email" type="text" class="form-control"
+        placeholder="Entre com seu e-mail"
+        [ngClass]="{'is-invalid': createAccountForm.get('email')?.errors?.['required'] && createAccountForm.get('email')?.touched }" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Nome</mat-label>
+      <input matInput id="name" name="name" formControlName="name" type="text" class="form-control"
+        placeholder="Entre com seu nome"
+        [ngClass]="{'is-invalid': createAccountForm.get('name')?.errors?.['required'] && createAccountForm.get('name')?.touched }" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>CPF</mat-label>
+      <input matInput id="cpf" name="cpf" formControlName="cpf" type="text" class="form-control"
+        placeholder="Entre com seu cpf"
+        [ngClass]="{'is-invalid': !createAccountForm.get('cpf').valid && createAccountForm.get('cpf')?.touched }" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="w-100" *ngIf="showBirthField">
+      <mat-label>Data de Aniversário</mat-label>
+      <input matInput [matDatepicker]="birth" id="birth" name="birth" formControlName="birth" type="text"
+        placeholder="Entre com uma data válida"
+        [ngClass]="{'is-invalid': createAccountForm.get('birth')?.errors?.['required'] && createAccountForm.get('birth')?.touched }" />
+      <mat-datepicker-toggle matIconSuffix [for]="birth" [ngClass]="{
+        'text-danger':createAccountForm.get('birth')?.hasError('required') && createAccountForm.get('birth')?.touched,
+        '':!createAccountForm.get('birth')?.hasError('required') || !createAccountForm.get('birth')?.touched }">
+      </mat-datepicker-toggle>
+      <mat-datepicker touchUi #birth></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="w-100" *ngIf="showCnpjField">
+      <mat-label>CNPJ</mat-label>
+      <input matInput id="cnpj" name="cnpj" formControlName="cnpj" type="text" class="form-control"
+        placeholder="Entre com o cnpj"
+        [ngClass]="{'is-invalid': !createAccountForm.get('cnpj').valid && createAccountForm.get('cnpj')?.touched }" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Telefone</mat-label>
+      <input matInput id="phone" name="phone" formControlName="phone" type="text" class="form-control"
+        placeholder="Entre com seu telefone"
+        [ngClass]="{'is-invalid': !createAccountForm.get('phone').valid && createAccountForm.get('phone')?.touched }" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>CEP</mat-label>
+      <div class="d-flex align-items-center">
+        <input matInput id="zipcode" name="zipcode" formControlName="zipcode" type="text" class="form-control"
+          placeholder="Entre com o CEP"
+          [ngClass]="{'is-invalid': !createAccountForm.get('zipcode').valid && createAccountForm.get('zipcode')?.touched }" />
+        <span mat-icon-button matSuffix class="btn btn-success rounded-4 small" (click)="buscarCEP()">
+          <mat-icon matSuffix>Buscar</mat-icon>
+        </span>
+      </div>
+    </mat-form-field>
+    <div class="d-flex" class="justify-content-start w-100">
+      <mat-form-field appearance="outline" class="logradouro">
+        <mat-label>Endereço</mat-label>
+        <input matInput id="logradouro" name="logradouro" formControlName="street" type="text" class="form-control"
+          placeholder="Entre com o logradouro"
+          [ngClass]="{'is-invalid': !createAccountForm.get('street').valid && createAccountForm.get('street')?.touched }" />
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="number">
+        <mat-label>Número</mat-label>
+        <input matInput id="number" name="number" formControlName="number" type="text" class="form-control"
+          placeholder="Número" />
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="complement">
+        <mat-label>Complemento</mat-label>
+        <input matInput id="complement" name="complement" formControlName="complement" type="text" class="form-control"
+          placeholder="Complemento" />
+      </mat-form-field>
+    </div>
+    <div class="d-flex" class="justify-content-start w-100">
+      <mat-form-field appearance="outline" class="neighborhood">
+        <mat-label>Bairro</mat-label>
+        <input matInput id="neighborhood" name="neighborhood" formControlName="neighborhood" type="text"
+          class="form-control" placeholder="Entre com o bairro"
+          [ngClass]="{'is-invalid': !createAccountForm.get('neighborhood').valid && createAccountForm.get('neighborhood')?.touched }" />
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="city">
+        <mat-label>Cidade</mat-label>
+        <input matInput id="city" name="city" formControlName="city" type="text" class="form-control"
+          placeholder="Cidade" />
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="state">
+        <mat-label>Estado</mat-label>
+        <input matInput id="state" name="state" formControlName="state" type="text" class="form-control"
+          placeholder="Estado" />
+      </mat-form-field>
+    </div>
+    <div class="d-flex" class="justify-content-start w-100">
+      <mat-form-field appearance="outline" class="cardNumber">
+        <mat-label>Cartão de Crédito</mat-label>
+        <input matInput id="cardNumber" name="cardNumber" formControlName="cardNumber" type="text" class="form-control"
+          placeholder="Entre com o Número do cartão de crédito"
+          [ngClass]="{'is-invalid': !createAccountForm.get('cardNumber').valid && createAccountForm.get('cardNumber')?.touched }" />
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="cardValidate">
+        <mat-label>Validade</mat-label>
+        <input matInput id="cardValidate" name="cardValidate" formControlName="cardValidate" type="text"
+          class="form-control" placeholder="Validade"
+          [ngClass]="{'is-invalid': createAccountForm.get('cardValidate')?.errors?.['required'] && createAccountForm.get('cardValidate')?.touched }" />
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100" class="cardCVV">
+        <mat-label>CVV</mat-label>
+        <input matInput required id="cardCVV" name="cardCVV" formControlName="cardCVV" type="password"
+          placeholder="Entre com o CVV" class="form-control"
+          [ngClass]="{'is-invalid': createAccountForm.get('cardCVV')?.errors?.['required'] && createAccountForm.get('cardCVV')?.touched }" />
+      </mat-form-field>
+    </div>
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Senha</mat-label>
+      <div class="input-group">
+        <input matInput required id="password" name="password" formControlName="password" type="text" autocomplete="new-password"
+          placeholder="Entre com uma senha" [type]="showPassword ? 'text' : 'password'" class="form-control"
+          [ngClass]="{'is-invalid': createAccountForm.get('password')?.errors?.['required'] && createAccountForm.get('password')?.touched }" />
+        <span id="basic-addon1" class="input-group-text border-0 bg-transparent" (click)="onTooglePassword()"
+          [class.text-danger]="createAccountForm.get('password')?.hasError('required') &&  createAccountForm.get('password')?.touched">
+          <i width="64" height="64" [ngClass]="eyeIconClass"
+            [class.text-danger]="createAccountForm.get('password')?.hasError('required') && createAccountForm.get('password')?.touched"></i>
+        </span>
+      </div>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Confrima Senha</mat-label>
+      <div class="input-group">
+        <input matInput required id="confirmPassword" name="confirmPassword" formControlName="confirmPassword" autocomplete="new-password"
+          type="password" class="form-control me-1" placeholder="Confirme a senha"
+          [type]="showConfirmPassword ? 'text' : 'password'"
+          [ngClass]="{ 'is-invalid': createAccountForm.get('confirmPassword')?.errors?.['required'] && createAccountForm.get('confirmPassword')?.touched}" />
+        <span id="basic-addon1" class="input-group-text border-0 bg-transparent" (click)="onToogleConfirmPassword()"
+          [class.text-danger]="createAccountForm.get('confirmPassword')?.hasError('required') &&  createAccountForm.get('confirmPassword')?.touched">
+          <i width="64" height="64" [ngClass]="eyeIconClassConfirmPassword"></i>
+        </span>
+      </div>
+    </mat-form-field>
+    <small>
+      Já tem uma conta?
+      <a class="m-0 p-1 btn btn-link" href="login">Faça login aqui.</a>
+    </small>
+    <div class="input-group mt-1 d-flex flex-column align-items-center justify-content-center">
+      <button type="submit" class="btn btn-primary w-responsive" disabled data-mdb-ripple-init
+        [ngClass]="{ disabled: !createAccountForm.valid }" [disabled]="!createAccountForm.valid">
+        Criar Conta
+      </button>
+    </div>
+  </form>
+</div>

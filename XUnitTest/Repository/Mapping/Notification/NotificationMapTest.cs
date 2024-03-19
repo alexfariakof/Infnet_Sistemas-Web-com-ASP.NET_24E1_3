@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Domain.Notifications;
 using Repository.Mapping.Notifications;
-using __mock__;
 
 namespace Repository.Mapping;
 public class NotificationMapTest

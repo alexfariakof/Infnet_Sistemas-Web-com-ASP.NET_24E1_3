@@ -7,21 +7,34 @@ using Bogus;
 namespace __mock__;
 public class MockCard
 {
-    public static Card GetFaker()
+    private static readonly Lazy<MockCard> _instance = new Lazy<MockCard>(() => new MockCard());
+
+    public static MockCard Instance => _instance.Value;
+
+    private readonly Faker<Card> _faker;
+
+    private MockCard()
     {
+        _faker = new Faker<Card>();
+    }
+
+    public Card GetFaker()
+    {
+        var validCreditCard = GenerateValidCreditCardNumber();
         var fakeCard = new Faker<Card>()
             .RuleFor(a => a.Id, f => f.Random.Guid())
             .RuleFor(a => a.Active, f => f.Random.Bool())
             .RuleFor(a => a.Limit, f => new Monetary(f.Random.Decimal(1000, 10000)))
-            .RuleFor(a => a.Number, f => GenerateValidCreditCardNumber())
-            .RuleFor(a => a.Validate, f => new ExpiryDate(new DateTime(DateTime.Now.Year + 5, f.Random.Int(1, 12), 1)))                
+            .RuleFor(a => a.Number, f => validCreditCard)
+            .RuleFor(a => a.Validate, f => new ExpiryDate(new DateTime(DateTime.Now.Year + 5, f.Random.Int(1, 12), 1)))
             .RuleFor(a => a.CVV, f => f.Random.Int(100, 999).ToString())
+            .RuleFor(a => a.CardBrand, f => CreditCardBrand.IdentifyCard(validCreditCard))
             .Generate();
 
         return fakeCard;
     }
 
-    public static List<Card> GetListFaker(int count)
+    public List<Card> GetListFaker(int count)
     {
         var cardList = new List<Card>();
         for (var i = 0; i < count; i++)
@@ -31,37 +44,34 @@ public class MockCard
         return cardList;
     }
 
-    private static string GenerateValidCreditCardNumber()
+    private string GenerateValidCreditCardNumber()
     {
         var cardNumber = GenerateRandomCreditCardNumber();
         var brandInfo = IdentifyCard(cardNumber);
 
-
-        while (true)
+        while (brandInfo.CardBrand == CardBrand.Invalid || !brandInfo.IsValid)
         {
             cardNumber = GenerateRandomCreditCardNumber();
             brandInfo = IdentifyCard(cardNumber);
-            if (brandInfo.CardBrand != CardBrand.Invalid && brandInfo.IsValid != false)
-                break;
         }
 
         return cardNumber;
     }
 
-    private static string GenerateRandomCreditCardNumber()
+    private string GenerateRandomCreditCardNumber()
     {
         var random = new Random();
         var number = string.Empty;
 
         for (int i = 0; i < 16; i++)
         {
-            number += random.Next(0, 14).ToString();
+            number += random.Next(0, 10).ToString();
         }
 
         return number;
     }
 
-    private static string GenerateRandomCreditCardNumber(CardBrand brand)
+    private string GenerateRandomCreditCardNumber(CardBrand brand)
     {
         var random = new Random();
         var number = string.Empty;

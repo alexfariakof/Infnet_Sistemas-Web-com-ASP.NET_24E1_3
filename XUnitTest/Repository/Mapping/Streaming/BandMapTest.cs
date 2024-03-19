@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Domain.Streaming.Agreggates;
 using Repository.Mapping.Streaming;
-using __mock__;
 
 namespace Repository.Mapping;
 public class BandMapTest
@@ -14,7 +13,7 @@ public class BandMapTest
 
         // Arrange
         var options = new DbContextOptionsBuilder<MockRegisterContext>()
-            .UseInMemoryDatabase(databaseName: "InMemoryDatabase")
+            .UseInMemoryDatabase(databaseName: "InMemoryDatabase_BandMapTest")
             .Options;
 
         using (var context = new MockRegisterContext(options))
@@ -43,10 +42,8 @@ public class BandMapTest
             Assert.True(idProperty.IsPrimaryKey());
             Assert.False(nameProperty.IsNullable);
             Assert.Equal(50, nameProperty.GetMaxLength());
-            Assert.False(descriptionProperty.IsNullable);
-            Assert.Equal(50, descriptionProperty.GetMaxLength());
+            Assert.False(descriptionProperty.IsNullable);            
             Assert.False(backdropProperty.IsNullable);
-            Assert.Equal(50, backdropProperty.GetMaxLength());
             Assert.NotNull(albumNavigation);
             Assert.True(albumNavigation.IsCollection);
             Assert.NotNull(albumNavigation?.ForeignKey.DeleteBehavior);

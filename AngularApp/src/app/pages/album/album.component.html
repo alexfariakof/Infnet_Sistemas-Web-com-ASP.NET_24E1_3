@@ -1,0 +1,21 @@
+<app-favorites-bar></app-favorites-bar>
+<div class="bg-dark rounded-2 mt-1 me-1 pe-1 pt-1 " fxFlex="100" fxFill>
+  <div class="text-center text-light">{{album.name}}</div>
+  <div fxLayout="row " fxLayoutGap="grid" *ngFor="let item of musics">
+    <mat-card class="mat-elevation-z4 ms-2 my-2" fxFlex="100">
+      <mat-card-header>
+        <mat-card-title>
+          <app-add-favorites></app-add-favorites>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{item.name}}</p>
+        <p>{{item.duration}}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <audio controls class="w-100">
+          <source src="URL_TO_YOUR_AUDIO_FILE" type="audio/mpeg">
+        </audio>
+      </mat-card-actions>
+    </mat-card>
+  </div>

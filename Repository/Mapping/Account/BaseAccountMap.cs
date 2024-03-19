@@ -11,7 +11,9 @@ public abstract class BaseAccountMap<T> : IEntityTypeConfiguration<T> where T : 
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id).ValueGeneratedOnAdd();
         builder.Property(x => x.Name).IsRequired().HasMaxLength(100);
-        builder.Property(x => x.CPF).IsRequired().HasMaxLength(14);
+
+        builder.HasOne(x => x.User)            
+            .WithMany().OnDelete(DeleteBehavior.NoAction);
 
         ConfigureCustom(builder);
     }

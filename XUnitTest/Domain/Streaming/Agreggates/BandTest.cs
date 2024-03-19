@@ -1,5 +1,4 @@
 ﻿using Domain.Streaming.Agreggates;
-using __mock__;
 
 namespace Domain.Streaming;
 public class BandTest
@@ -8,7 +7,7 @@ public class BandTest
     public void Band_Should_Set_Properties_Correctly()
     {
         // Arrange
-        var fakeBand = MockBand.GetFaker();
+        var fakeBand = MockBand.Instance.GetFaker();
 
         // Act
         var band = new Band
@@ -33,8 +32,8 @@ public class BandTest
     {
         // Arrange
         var band = new Band();
-        var fakeAlbum = MockAlbum.GetFaker();
-        var fakeAlbumList = MockAlbum.GetListFaker(2);
+        var fakeAlbum = MockAlbum.Instance.GetFaker();
+        var fakeAlbumList = MockAlbum.Instance.GetListFaker(2);
 
         // Act
         band.AddAlbum(fakeAlbum);

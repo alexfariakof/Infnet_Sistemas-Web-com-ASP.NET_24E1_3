@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Domain.Streaming.Agreggates;
 using Repository.Mapping.Streaming;
-using __mock__;
 
 namespace Repository.Mapping;
 public class PlaylistMapTest
@@ -10,7 +9,7 @@ public class PlaylistMapTest
     [Fact]
     public void EntityConfiguration_IsValid()
     {
-        const int PROPERTY_COUNT = 2;
+        const int PROPERTY_COUNT = 3;
         // Arrange
         var options = new DbContextOptionsBuilder<MockRegisterContext>()
             .UseInMemoryDatabase(databaseName: "InMemoryDatabase_PlaylistMapTest")
@@ -30,11 +29,13 @@ public class PlaylistMapTest
             // Act
             var idProperty = entityType?.FindProperty("Id");
             var nameProperty = entityType?.FindProperty("Name");
+            var backdropProperty = entityType?.FindProperty("Backdrop");
 
             // Assert
             Assert.NotNull(idProperty);
             Assert.NotNull(nameProperty);
-
+            Assert.NotNull(backdropProperty);
+            Assert.False(backdropProperty.IsNullable);
             Assert.True(idProperty.IsPrimaryKey());
             Assert.False(nameProperty.IsNullable);
             Assert.Equal(50, nameProperty.GetMaxLength());

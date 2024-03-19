@@ -14,12 +14,12 @@ public class PlaylistPersonalMap : IEntityTypeConfiguration<PlaylistPersonal>
         builder.Property(x => x.Id).ValueGeneratedOnAdd();
         builder.Property(x => x.Name).IsRequired().HasMaxLength(50);
         builder.Property(x => x.IsPublic).IsRequired();
-        builder.Property(x => x.DtCreated).IsRequired();
+        builder.Property(x => x.DtCreated).HasDefaultValue(DateTime.Now);
 
         builder.HasMany(x => x.Musics)
         .WithMany(x => x.PersonalPlaylists)
         .UsingEntity<Dictionary<string, object>>(
-            "MusicPlayList",
+            "MusicPlayListPersonal",
             j => j
             .HasOne<Music>()
             .WithMany()
@@ -27,11 +27,11 @@ public class PlaylistPersonalMap : IEntityTypeConfiguration<PlaylistPersonal>
         j => j
             .HasOne<PlaylistPersonal>()
             .WithMany()
-            .HasForeignKey("PlaylistId"),
+            .HasForeignKey("PlaylistPersonalId"),
         j =>
         {
-            j.HasKey("MusicId", "PlaylistId");
-            j.Property<DateTime>("DtAdded");
+            j.HasKey("MusicId", "PlaylistPersonalId");
+            j.Property<DateTime>("DtAdded").HasDefaultValue(DateTime.Now);
         });
     }
 }

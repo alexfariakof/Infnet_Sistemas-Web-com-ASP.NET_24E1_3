@@ -1,0 +1,58 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {},
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Chrome Attach Debugger https",
+        "type": "chrome",
+        "request": "launch",
+        "url": "https://localhost:4200",
+        "webRoot": "${workspaceFolder}",
+        "sourceMaps": true,
+        "sourceMapPathOverrides": {
+          "webpack:///./*": "${webRoot}/*"
+        },
+        "sourceMapPathOverrides": {
+          "webpack:/*": "${webRoot}/*"
+        },
+        "userDataDir": "${workspaceFolder}/.vscode/chrome",
+        "disableNetworkCache": true,
+        "diagnosticLogging": true
+      },
+      {
+        "name": "Chrome Attach Debugger http",
+        "type": "chrome",
+        "request": "launch",
+        "url": "http://localhost:4200",
+        "webRoot": "${workspaceFolder}",
+        "sourceMaps": true,
+        "sourceMapPathOverrides": {
+          "webpack:///./*": "${webRoot}/*"
+        },
+        "sourceMapPathOverrides": {
+          "webpack:/*": "${webRoot}/*"
+        },
+        "userDataDir": "${workspaceFolder}/.vscode/chrome",
+        "disableNetworkCache": true,
+        "diagnosticLogging": true
+      },
+
+      {
+        "type": "chrome",
+        "request": "launch",
+        "name": "Karma Attach Debugger",
+        "url": "http://localhost:9876/debug.html",
+        "webRoot": "${workspaceFolder}",
+        "pathMapping": {
+          "/_karma_webpack_/": "${workspaceRoot}/"
+        }
+      },
+    ]
+  }
+}

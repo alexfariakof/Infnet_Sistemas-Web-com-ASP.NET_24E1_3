@@ -1,0 +1,31 @@
+<div class="content-full-height d-flex align-items-center justify-content-center bg-dark fs-6 fs-sm-5 fs-md-4 fs-lg-3" >
+  <div class="d-flex flex-column m-2 border border-2 border-primary bg-dark-subtle rounded-4 align-items-center justify-content-center fs-6 fs-sm-5 fs-md-4 fs-lg-3">
+    <form class="d-flex flex-column m-3 b-0  align-items-center justify-content-center fs-6 fs-sm-5 fs-md-4 fs-lg-3"
+      (ngSubmit)="onLoginClick()" [formGroup]="loginForm" >
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Email</mat-label>
+        <input matInput required id="email" name="email" formControlName="email" type="text"
+          placeholder="Entre com o seu email"
+          [ngClass]="{ 'is-invalid text-danger': loginForm.get('email')?.errors?.['required'] && loginForm.get('email')?.touched }" />
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Senha</mat-label>
+        <input matInput required id="password" name="password" formControlName="password" type="passwrod"
+          placeholder="Entre com a sua senha" [type]="showPassword ? 'text' : 'password'"
+          [ngClass]="{'is-invalid': loginForm.get('password')?.errors?.['required'] && loginForm.get('password')?.touched }" />
+        <i class="position-absolute my-3 top-0 end-0" (click)="onTooglePassword()" [ngClass]="eyeIconClass"
+          [class.text-danger]="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched"></i>
+      </mat-form-field>
+      <div class="input-group d-flex flex-column align-items-center justify-content-center mb-1">
+        <button type="submit" class="btn btn-primary w-100" [ngClass]="{ disabled: !loginForm.valid }"
+          [disabled]="!loginForm.valid">
+          Entrar
+        </button>
+      </div>
+      <small>
+        Não tem uma conta? Inscreva-se como
+        <a class="m-0 p-1 " href="account/customer">cliente</a>ou
+        <a class="m-0 p-1 " href="account/merchant">comerciante</a>
+      </small>
+    </form>
+  </div>

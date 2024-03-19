@@ -68,7 +68,7 @@ jobs:
             SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |                    
-          ./.sonar/scanner/dotnet-sonarscanner begin /k:"alexfariakof_Infnet_Sistemas-Web-com-ASP.NET_24E1_3" /o:"alexfariakof" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.exclusions="XunitTest/**, **/.documents/**, **/Program.cs, **/*.spec.ts, **/main.ts, **/environment.*, **/app.routing.module.ts, **/*.js, **/test.ts"  /d:sonar.cs.lcov.reportPaths="**/coveragereport/lcov.info" /d:sonar.typescript.opencover.reportsPaths="**/coverage/angular-app/clover.xml" /d:sonar.typescript.lcov.reportPaths="**/coverage/angular-app/lcov.info"          
+          ./.sonar/scanner/dotnet-sonarscanner begin /k:"alexfariakof_Infnet_Sistemas-Web-com-ASP.NET_24E1_3" /o:"alexfariakof" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.exclusions="**/DataSeeders/**, **/.documents/**, **/Program.cs, **/*.spec.ts, **/main.ts, **/environment.*, **/*.routing.module.ts, **/*.js, **/test.ts, **/*Test.cs"  /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml" /d:sonar.cs.lcov.reportPaths="**/TestResults/coveragereport/lcov.info" /d:sonar.typescript.opencover.reportsPaths="**/coverage/angular-app/clover.xml" /d:sonar.typescript.lcov.reportPaths="**/coverage/angular-app/lcov.info"          
           
           dotnet tool install -g dotnet-reportgenerator-globaltool
           # Executa Build/Restore das  configura��es do projeto executando automaticamente a gera��o do report Genetator do Backend e Frontend

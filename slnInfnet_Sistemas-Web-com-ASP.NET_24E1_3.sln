@@ -49,6 +49,8 @@ Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "AngularApp", "AngularApp\An
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{86798CA1-2BD8-40DE-BDE3-E4959EB40D98}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataSeeders", "DataSeeders\DataSeeders.csproj", "{7A1DBEDF-E7E0-4E4C-898B-66CC39F3EB1E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,6 +95,10 @@ Global
 		{86798CA1-2BD8-40DE-BDE3-E4959EB40D98}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86798CA1-2BD8-40DE-BDE3-E4959EB40D98}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86798CA1-2BD8-40DE-BDE3-E4959EB40D98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A1DBEDF-E7E0-4E4C-898B-66CC39F3EB1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A1DBEDF-E7E0-4E4C-898B-66CC39F3EB1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A1DBEDF-E7E0-4E4C-898B-66CC39F3EB1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A1DBEDF-E7E0-4E4C-898B-66CC39F3EB1E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

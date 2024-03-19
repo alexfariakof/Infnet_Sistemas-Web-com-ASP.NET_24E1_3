@@ -10,7 +10,9 @@ using Domain.Account.ValueObject;
 namespace Repository;
 public class RegisterContext: DbContext
 {
-    public RegisterContext(DbContextOptions<RegisterContext> options) : base(options) { }        
+    public RegisterContext(DbContextOptions<RegisterContext> options) : base(options) { }
+    public DbSet<User> User { get; set; }    
+    public DbSet<UserType> UserType { get; set; }
     public DbSet<Customer> Customer { get; set; }        
     public DbSet<Merchant> Merchant { get; set; }
     public DbSet<Address> Address { get; set; }
@@ -21,6 +23,7 @@ public class RegisterContext: DbContext
     public DbSet<Flat> Flat { get; set; }
     public DbSet<Music> Music { get; set; }    
     public DbSet<Playlist> Playlist { get; set; }
+    public DbSet<Genre> Genre { get; set; }
     public DbSet<Card> Card { get; set; }
     public DbSet<CreditCardBrand> CardBrand { get; set; }
     public DbSet<Transaction> Transaction { get; set; }

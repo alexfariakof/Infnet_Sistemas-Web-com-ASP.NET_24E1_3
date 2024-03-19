@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Domain.Transactions.Agreggates;
 using Repository.Mapping.Transactions;
-using __mock__;
 
 namespace Repository.Mapping;
 public class TransactionMapTest

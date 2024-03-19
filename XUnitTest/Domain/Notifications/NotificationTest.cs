@@ -7,8 +7,8 @@ public class NotificationTest
     public void Should_Succeed_Create_Notification_With_Valid_Parameters()
     {
         // Arrange
-        var destination = MockCustomer.GetFaker();
-        var sender = MockCustomer.GetFaker();
+        var destination = MockCustomer.Instance.GetFaker();
+        var sender = MockCustomer.Instance.GetFaker();
         var title = "Test Title";
         var message = "Test Message";
         var notificationType = NotificationType.User;
@@ -42,7 +42,7 @@ public class NotificationTest
     public void Should_Throw_Exception_Create_Notification_With_Null_Title()
     {
         // Arrange
-        var destination = MockCustomer.GetFaker();
+        var destination = MockCustomer.Instance.GetFaker();
         var message = "Test Message";
         var notificationType = NotificationType.User;
 
@@ -54,7 +54,7 @@ public class NotificationTest
     public void Should_Throw_Exception_Create_Notification_With_Null_Message()
     {
         // Arrange
-        var destination = MockCustomer.GetFaker();
+        var destination = MockCustomer.Instance.GetFaker();
         var title = "Test Title";
         var notificationType = NotificationType.User;
 
@@ -66,7 +66,7 @@ public class NotificationTest
     public void Should_Throw_Exception_Create_Notification_With_User_Type_And_Null_Sender()
     {
         // Arrange
-        var destination = MockCustomer.GetFaker();
+        var destination = MockCustomer.Instance.GetFaker();
         var title = "Test Title";
         var message = "Test Message";
         var notificationType = NotificationType.User;

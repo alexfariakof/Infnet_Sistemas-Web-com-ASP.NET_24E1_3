@@ -1,5 +1,4 @@
 ﻿using Domain.Streaming.Agreggates;
-using __mock__;
 
 namespace Domain.Account;
 public class CustomerTest
@@ -8,7 +7,7 @@ public class CustomerTest
     public void Should_Create_Account_With_Flat_Card_And_Playlist()
     {
         // Arrange
-        var customerMock = MockCustomer.GetFaker();
+        var customerMock = MockCustomer.Instance.GetFaker();
         var customer = customerMock;
         var flat = new Flat
         {
@@ -18,15 +17,15 @@ public class CustomerTest
             Description = "Test Description"
         };
 
-        var card = MockCard.GetFaker();
+        var card = MockCard.Instance.GetFaker();
         card.Active = true;
 
         // Act
-        customer.CreateAccount(customerMock, MockAddress.GetFaker(), flat, card);
+        customer.CreateAccount(customerMock, MockAddress.Instance.GetFaker(), flat, card);
 
         // Assert
         Assert.Equal(customerMock.Name, customer.Name);
-        Assert.Equal(customerMock.Login, customer.Login) ;
+        Assert.Equal(customerMock.User.Login, customer.User.Login) ;
         Assert.Equal(customerMock.CPF, customer.CPF);
         Assert.Equal(customerMock.Birth, customer.Birth);
         Assert.Single(customer.Cards, card);

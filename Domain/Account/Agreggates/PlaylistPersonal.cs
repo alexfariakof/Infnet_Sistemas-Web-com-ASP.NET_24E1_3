@@ -8,5 +8,6 @@ public class PlaylistPersonal : BaseModel
     public bool IsPublic { get; set; }
     public DateTime DtCreated { get; set; }
     public string? Name { get; set; }
-    public virtual IList<Music> Musics { get ; set ; } = new List<Music>();
+    public virtual IList<Music> Musics { get; set; } = new List<Music>();
+
 }

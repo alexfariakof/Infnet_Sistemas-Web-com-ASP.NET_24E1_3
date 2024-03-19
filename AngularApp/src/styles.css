@@ -1,1 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; overflow-x: hidden; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.header-full-height {
+  height: 4vh;
+}
+.content-full-height {
+  height: 94vh;
+}
+
+.cdk-overlay-container {
+  z-index: 1999;
+}
+
+.loading-modal .modal-content {
+  background-color: transparent;
+  text-align: center;
+}

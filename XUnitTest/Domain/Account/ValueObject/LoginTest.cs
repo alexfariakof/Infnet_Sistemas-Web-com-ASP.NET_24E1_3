@@ -1,5 +1,4 @@
-﻿using __mock__;
-using Domain.Account.ValueObject;
+﻿using Domain.Account.ValueObject;
 
 namespace Domain.Account;
 public class LoginTest
@@ -8,7 +7,7 @@ public class LoginTest
     public void Should_Success_With_Valid_Login()
     {
         // Arrange
-        var mockLogin = MockLogin.GetFaker();
+        var mockLogin = MockLogin.Instance.GetFaker();
 
         // Act
         var login = new Login() 
@@ -37,7 +36,7 @@ public class LoginTest
     public void Should_Throws_Erro_With_Long_Email()
     {
         // Arrange & Act 
-        var mockLogin = MockLogin.GetFaker();
+        var mockLogin = MockLogin.Instance.GetFaker();
 
         var exception = () => mockLogin.Email = new string('a', 257);
         

@@ -43,7 +43,7 @@ jobs:
     - name: Test .Net App
       run: | 
           dotnet tool install -g dotnet-reportgenerator-globaltool 
-          dotnet test ./XunitTest/XunitTest.csproj
+          dotnet test ./XUnitTest/XunitTest.csproj
       continue-on-error: false
 
 
@@ -79,5 +79,5 @@ jobs:
   trigger_tests_sonarcloud:
     needs: build_and_test_angular
     name: Triggered Build and Test
-    uses: alexfariakof/Infnet_Sistemas-Web-com-ASP.NET_24E1_3/.github/workflows/test_analyse_in_Sonar_Cloud.yml@main
+    uses: alexfariakof/Infnet_Sistemas-Web-com-ASP.NET_24E1_3/.github/workflows/Test_in_Sonar_Cloud.yml@main
     secrets: inherit

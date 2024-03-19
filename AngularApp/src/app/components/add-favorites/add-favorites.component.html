@@ -1,0 +1,12 @@
+<ul class="list-unstyled mb-0 mx-2 ms-auto ">
+  <li class="nav-item dropdown">
+    <i class="nav-link button bi bi-plus" width="32" height="32" role="button" data-bs-toggle="dropdown"
+      aria-expanded="true">Adicionar Favoritos</i>
+    <ul class="dropdown-menu dropdown-menu-light text-small text-center shadow" style="left: -150%"
+      aria-labelledby="dropdown">
+      <li class="text-start" *ngFor="let item of myPlaylist">
+        <button class="nav-link dropdown-item px-2">{{item.name}}</button>
+      </li>
+    </ul>
+  </li>
+</ul>

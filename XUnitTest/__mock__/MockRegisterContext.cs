@@ -14,7 +14,7 @@ public class MockRegisterContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);        
-        modelBuilder.ApplyConfiguration(new CustomerMap());
+        modelBuilder.ApplyConfiguration(new UserMap());
         modelBuilder.ApplyConfiguration(new MerchantMap());
         modelBuilder.ApplyConfiguration(new AddressMap());
         modelBuilder.ApplyConfiguration(new PlaylistPersonalMap());

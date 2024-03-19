@@ -1,0 +1,27 @@
+<div class="h-100">
+  <div fxLayout="row" fxLayoutAlign="stretch" fxFlex class="fxClass-all">
+    <app-favorites-bar></app-favorites-bar>
+    <div class="bg-dark rounded-2 mt-1 me-1 pe-1 pt-1 " fxFlex="100" fxFill>
+      <div fxLayout="row " fxLayoutGap="grid" *ngFor="let item of musics">
+        <mat-card class="mat-elevation-z4 ms-2 mt-1" fxFlex="97%">
+          <mat-card-header>
+            <mat-card-title>
+              <a class="btn btn-link w-100 text-center text-black text-decoration-none" href="album/{{item.albumId}}">
+                <i class="bi bi-music-note-beamed "> Detalhes do Album</i>
+              </a>
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>{{item.name}}</p>
+            <p>{{item.duration}}</p>
+          </mat-card-content>
+          <mat-card-actions>
+            <audio controls class="w-100">
+              <source src="URL_TO_YOUR_AUDIO_FILE" type="audio/mpeg">
+            </audio>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

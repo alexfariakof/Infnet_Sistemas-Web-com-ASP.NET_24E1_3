@@ -8,7 +8,7 @@ public class FlatTest
     public void Should_Set_Properties_Correctly_Flat()
     {
         // Arrange
-        var expectedFlat = MockFlat.GetFaker();
+        var expectedFlat = MockFlat.Instance.GetFaker();
         var actualFlat = new Flat
         {
             Id = expectedFlat.Id,

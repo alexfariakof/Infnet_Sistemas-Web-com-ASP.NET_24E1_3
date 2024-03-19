@@ -1,0 +1,19 @@
+<div class="h-100" fxLayout="row" fxLayoutAlign="stretch" fxFlex class="fxClass-all"
+  [ngStyle.xs]="{'font-size.px': 10}" [ngStyle.sm]="{'font-size.px': 20}" [ngStyle.md]="{'font-size.px': 30}">
+  <div class="bg-dark rounded-2 mx-1 mt-1 text-light text-start" fxFlex="100" fxLayout="column" fxLayoutAlign="start start">
+    <button type="button" class="btn btn-link text-start text-light text-decoration-none " data-toggle="tooltip"
+      data-placement="right" title="Criar uma nova playlist" onclick="alert('Criar uma nova playlist')">
+      <div fxFlex="100" fxLayout="row" fxFill fxLayoutAlign="start start">
+        <span class="fs-5" style="width: max-content;" >Meus Favoritos</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-plus "
+          viewBox="0 0 16 16">
+          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4">
+          </path>
+        </svg>
+      </div>
+    </button>
+    <div *ngFor="let item of myPlaylist">
+      <a class="btn btn-link text-start text-light text-decoration-none " href="favorites/{{item.id}}"><i
+          class="bi bi-music-note-beamed"> {{item.name}}</i></a>
+    </div>
+  </div>

@@ -1,5 +1,4 @@
-﻿using __mock__;
-using Domain.Account.Agreggates;
+﻿using Domain.Account.Agreggates;
 using Domain.Streaming.Agreggates;
 using Domain.Transactions.Agreggates;
 using Moq;
@@ -14,7 +13,7 @@ public class AbstractAccountTests
         var accountMock = new Mock<AbstractAccount<Customer>>();
         accountMock.SetupGet(a => a.Cards).Returns(new List<Card>());
         AbstractAccount<Customer> account = accountMock.Object;
-        var card = MockCard.GetFaker();
+        var card = MockCard.Instance.GetFaker();
 
         // Act
         account.AddCard(card);
@@ -38,12 +37,12 @@ public class AbstractAccountTests
             Value = 50.0m,
             Description = "Test Description"
         };
-        var card = MockCard.GetFaker();
+        var card = MockCard.Instance.GetFaker();
         card.Active = true;
         accountMock.SetupGet(a => a.Cards).Returns(new List<Card> { card });
 
         // Act
-        account.AddFlat(MockCustomer.GetFaker(), flat, card);
+        account.AddFlat(MockCustomer.Instance.GetFaker(), flat, card);
 
         // Assert
         Assert.Single(account.Signatures, s => s.Flat == flat && s.Active);
@@ -68,13 +67,13 @@ public class AbstractAccountTests
             Value = 50.0m,
             Description = "Test Description"
         };
-        var cards = MockCard.GetListFaker(100);
+        var cards = MockCard.Instance.GetListFaker(100);
         accountMock.SetupGet(a => a.Cards).Returns(cards);
         var card = cards.Where(c => c.Active == true).First();
         accountMock.SetupGet(a => a.Cards).Returns(new List<Card> { card });
 
         // Act
-        account.AddFlat(MockCustomer.GetFaker(), flat, card);
+        account.AddFlat(MockCustomer.Instance.GetFaker(), flat, card);
 
         // Assert
         Assert.Single(account.Signatures, s => s.Flat == flat && s.Active);
@@ -99,7 +98,7 @@ public class AbstractAccountTests
 
         var cardMock = new Mock<Card>();
         var card = cardMock.Object;
-        var mockCard = MockCard.GetFaker();
+        var mockCard = MockCard.Instance.GetFaker();
         card.Id = mockCard.Id;
         card.Number = "InvalidCardNumber"; // This will cause an invalid card
         card.Validate = mockCard.Validate;
@@ -108,6 +107,6 @@ public class AbstractAccountTests
         card.Limit = mockCard.Limit;
 
         // Act and Assert
-        Assert.Throws<ArgumentException>(() => account.AddFlat(MockCustomer.GetFaker(), flat, card));
+        Assert.Throws<ArgumentException>(() => account.AddFlat(MockCustomer.Instance.GetFaker(), flat, card));
     }
 }

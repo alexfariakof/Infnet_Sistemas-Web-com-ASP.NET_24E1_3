@@ -1,6 +1,5 @@
 ﻿using Domain.Account.Agreggates;
 using Domain.Streaming.Agreggates;
-using __mock__;
 
 namespace Domain.Streaming;
 public class MusicTest
@@ -9,7 +8,7 @@ public class MusicTest
     public void Should_Set_Properties_Correctly_Music()
     {
         // Arrange
-        var fakeMusic = MockMusic.GetFaker();
+        var fakeMusic = MockMusic.Instance.GetFaker();
 
         // Act
         var music = new Music
@@ -29,19 +28,19 @@ public class MusicTest
     public void Should_Set_Properties_Correctly_Playlist()
     {
         // Arrange
-        var fakeMusic1 = MockMusic.GetFaker();
-        var fakeMusic2 = MockMusic.GetFaker();
+        var fakeMusic1 = MockMusic.Instance.GetFaker();
+        var fakeMusic2 = MockMusic.Instance.GetFaker();
         var fakeMusicList = new List<Music> { fakeMusic1, fakeMusic2 };
 
         // Act
         var playlist = new Playlist
         {
-            Name = "Test Playlist",
+            Name = "Test Personal Playlist",
             Musics = fakeMusicList
         };
 
         // Assert
-        Assert.Equal("Test Playlist", playlist.Name);
+        Assert.Equal("Test Personal Playlist", playlist.Name);
         Assert.Equal(fakeMusicList, playlist.Musics);
     }
 
@@ -49,8 +48,8 @@ public class MusicTest
     public void Should_Set_Properties_Correctly_PlaylistPersonal()
     {
         // Arrange
-        var fakeCustomer = MockCustomer.GetFaker();
-        var fakeMusic = MockMusic.GetFaker();
+        var fakeCustomer = MockCustomer.Instance.GetFaker();
+        var fakeMusic = MockMusic.Instance.GetFaker();
         var fakeMusicList = new List<Music> { fakeMusic };
 
         // Act
@@ -59,14 +58,14 @@ public class MusicTest
             Customer = fakeCustomer,
             IsPublic = true,
             DtCreated = DateTime.Now,
-            Name = "Personal Playlist",
+            Name = "Test Personal Playlist",
             Musics = fakeMusicList
         };
 
         // Assert
         Assert.Equal(fakeCustomer, playlistPersonal.Customer);
         Assert.True(playlistPersonal.IsPublic);
-        Assert.Equal("Personal Playlist", playlistPersonal.Name);
+        Assert.Equal("Test Personal Playlist", playlistPersonal.Name);
         Assert.Equal(fakeMusicList, playlistPersonal.Musics);
     }
 }
