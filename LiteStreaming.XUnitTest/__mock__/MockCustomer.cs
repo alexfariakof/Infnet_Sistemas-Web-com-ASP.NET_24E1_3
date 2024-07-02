@@ -44,7 +44,7 @@ public class MockCustomer
         }
     }
 
-    public List<Customer> GetListFaker(int count)
+    public List<Customer> GetListFaker(int count =3)
     {
         lock (LockObject)
         {

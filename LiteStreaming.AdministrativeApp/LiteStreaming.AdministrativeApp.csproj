@@ -6,11 +6,15 @@
 		<UserSecretsId>85450a77-2fcd-43fa-b077-4253e62a08ed</UserSecretsId>
 		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 	</PropertyGroup>
+	<ItemGroup>
+	  <Compile Remove="Models\BasePageModel.cs" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.4" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="8.0.4" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.4" />
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
 	</ItemGroup>
 
 	<ItemGroup>

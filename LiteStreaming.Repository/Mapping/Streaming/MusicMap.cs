@@ -7,8 +7,8 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace Repository.Mapping.Streaming;
 public class MusicMap : IEntityTypeConfiguration<Music>
 {
-    private readonly BaseConstants baseConstants;
-    public MusicMap(BaseConstants baseConstants) : base()
+    private readonly DefaultValueSqlConstants baseConstants;
+    public MusicMap(DefaultValueSqlConstants baseConstants) : base()
     {
         this.baseConstants = baseConstants;
     }

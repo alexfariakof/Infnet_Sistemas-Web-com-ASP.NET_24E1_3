@@ -69,7 +69,7 @@ public class MusicRepositoryTest
         contextMock.Setup(c => c.Set<Music>()).Returns(dbSetMock.Object);
 
         // Act
-        var result = repository.GetAll();
+        var result = repository.FindAll();
 
         // Assert
         Assert.Equal(musics.Count, result.Count());

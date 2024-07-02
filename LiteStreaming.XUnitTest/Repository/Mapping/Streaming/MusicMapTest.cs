@@ -15,7 +15,7 @@ public class MusicMapTest
         using (var context = new MockRegisterContext(options))
         {
             var builder = new ModelBuilder(new ConventionSet());
-            var configuration = new MusicMap(new Repository.Constants.BaseConstants());
+            var configuration = new MusicMap(new Repository.Constants.DefaultValueSqlConstants());
 
             configuration.Configure(builder.Entity<Music>());
 

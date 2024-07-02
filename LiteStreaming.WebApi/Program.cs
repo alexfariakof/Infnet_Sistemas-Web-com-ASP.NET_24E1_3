@@ -61,7 +61,7 @@ builder.Services.AddSwaggerGen(c => {
     });
 });
 
-builder.Services.AddDataSeeders();
+builder.Services.AddWebApiDataSeeders();
 
 if (builder.Environment.IsStaging())
 {
@@ -122,7 +122,7 @@ if (app.Environment.IsDevelopment() || app.Environment.IsStaging() || app.Enviro
 {
     app.UseSwagger();
     app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", $"{appName} {appVersion}"); });
-    app.RunDataSeeders();
+    app.RunWebApiDataSeeders();
 }
 else
     app.UseHttpsRedirection();

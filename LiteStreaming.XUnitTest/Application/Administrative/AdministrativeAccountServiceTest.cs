@@ -7,7 +7,7 @@ using Domain.Administrative.ValueObject;
 using EasyCryptoSalt;
 using Microsoft.Extensions.Options;
 using Moq;
-using Repository.Interfaces;
+using Repository.Persistency.Abstractions.Interfaces;
 using System.Linq.Expressions;
 
 namespace Application.Administrative;
@@ -17,7 +17,7 @@ public class AdministrativeAccountServiceTest
     private Mock<IMapper> mapperMock;
     private Mock<IRepository<AdminAccount>> administrativeAccountRepositoryMock;
     private readonly AdminAccountService administrativeAccountService;
-    private readonly List<AdminAccount> mockAccountList = MockAdministrativeAccount.Instance.GetListFaker(10);
+    private readonly List<AdminAccount> mockAccountList = MockAdminAccount.Instance.GetListFaker(10);
     public AdministrativeAccountServiceTest()
     {
         var options = Options.Create(new CryptoOptions
@@ -36,9 +36,9 @@ public class AdministrativeAccountServiceTest
     public void Create_AdministrativeAccount_Successfully()
     {
         // Arrange
-        var account = MockAdministrativeAccount.Instance.GetFaker();
+        var account = MockAdminAccount.Instance.GetFaker();
         account.PerfilType = Perfil.UserType.Admin;
-        var accountDto = MockAdministrativeAccount.Instance.GetFakerDto(account);
+        var accountDto = MockAdminAccount.Instance.GetFakerDto(account);
         administrativeAccountRepositoryMock.Setup(repo => repo.Exists(It.IsAny<Expression<Func<AdminAccount, bool>>>())).Returns(false);
         administrativeAccountRepositoryMock.Setup(repo => repo.Find(It.IsAny<Expression<Func<AdminAccount, bool>>>())).Returns((new List<AdminAccount> {account }).AsEnumerable());        
         mapperMock.Setup(mapper => mapper.Map<AdminAccount>(accountDto)).Returns(account);
@@ -59,9 +59,9 @@ public class AdministrativeAccountServiceTest
     public void FindById_AdministrativeAccount_Successfully()
     {
         // Arrange
-        var account = MockAdministrativeAccount.Instance.GetFaker();
+        var account = MockAdminAccount.Instance.GetFaker();
         var accountId = account.Id;
-        var accountDto = MockAdministrativeAccount.Instance.GetFakerDto(account);
+        var accountDto = MockAdminAccount.Instance.GetFakerDto(account);
         administrativeAccountRepositoryMock.Setup(repo => repo.GetById(accountId)).Returns(account);
         mapperMock.Setup(mapper => mapper.Map<AdminAccountDto>(account)).Returns(accountDto);
 
@@ -82,15 +82,15 @@ public class AdministrativeAccountServiceTest
         
         var accounts = mockAccountList.Take(3).ToList();
         var userId = accounts.First().Id;
-        var accountDtos = MockAdministrativeAccount.Instance.GetFakerListDto(accounts);
-        administrativeAccountRepositoryMock.Setup(repo => repo.GetAll()).Returns(accounts.AsQueryable());
+        var accountDtos = MockAdminAccount.Instance.GetFakerListDto(accounts);
+        administrativeAccountRepositoryMock.Setup(repo => repo.FindAll()).Returns(accounts.AsQueryable());
         mapperMock.Setup(mapper => mapper.Map<List<AdminAccountDto>>(It.IsAny<List<AdminAccount>>())).Returns(accountDtos);
 
         // Act
         var result = administrativeAccountService.FindAll(userId);
 
         // Assert
-        administrativeAccountRepositoryMock.Verify(repo => repo.GetAll(), Times.Once);
+        administrativeAccountRepositoryMock.Verify(repo => repo.FindAll(), Times.Once);
         Assert.NotNull(result);
         Assert.Equal(3, result.Count);
     }
@@ -99,9 +99,9 @@ public class AdministrativeAccountServiceTest
     public void Update_AdministrativeAccount_Successfully()
     {
         // Arrange
-        var account = MockAdministrativeAccount.Instance.GetFaker();
+        var account = MockAdminAccount.Instance.GetFaker();
         account.PerfilType = Perfil.UserType.Admin;
-        var accountDto = MockAdministrativeAccount.Instance.GetFakerDto(account);
+        var accountDto = MockAdminAccount.Instance.GetFakerDto(account);
         administrativeAccountRepositoryMock.Setup(repo => repo.Find(It.IsAny<Expression<Func<AdminAccount, bool>>>())).Returns((new List<AdminAccount> { account }).AsEnumerable());
         mapperMock.Setup(mapper => mapper.Map<AdminAccount>(accountDto)).Returns(account);
         mapperMock.Setup(mapper => mapper.Map<AdminAccountDto>(account)).Returns(accountDto);
@@ -120,9 +120,9 @@ public class AdministrativeAccountServiceTest
     public void Delete_AdministrativeAccount_Successfully()
     {
         // Arrange
-        var account = MockAdministrativeAccount.Instance.GetFaker();
+        var account = MockAdminAccount.Instance.GetFaker();
         account.PerfilType = Perfil.UserType.Admin;
-        var accountDto = MockAdministrativeAccount.Instance.GetFakerDto(account);
+        var accountDto = MockAdminAccount.Instance.GetFakerDto(account);
         administrativeAccountRepositoryMock.Setup(repo => repo.Exists(It.IsAny<Expression<Func<AdminAccount, bool>>>())).Returns(false);
         administrativeAccountRepositoryMock.Setup(repo => repo.Find(It.IsAny<Expression<Func<AdminAccount, bool>>>())).Returns((new List<AdminAccount> { account }).AsEnumerable());
         mapperMock.Setup(mapper => mapper.Map<AdminAccount>(accountDto)).Returns(account);
@@ -140,16 +140,16 @@ public class AdministrativeAccountServiceTest
     {
         // Arrange
         var accounts = mockAccountList.Take(3).ToList();
-        var accountDtos = MockAdministrativeAccount.Instance.GetFakerListDto(accounts);
+        var accountDtos = MockAdminAccount.Instance.GetFakerListDto(accounts);
 
-        administrativeAccountRepositoryMock.Setup(repo => repo.GetAll()).Returns(accounts.AsQueryable());
+        administrativeAccountRepositoryMock.Setup(repo => repo.FindAll()).Returns(accounts.AsQueryable());
         mapperMock.Setup(mapper => mapper.Map<List<AdminAccountDto>>(accounts)).Returns(accountDtos);
 
         // Act
         var result = administrativeAccountService.FindAll();
 
         // Assert
-        administrativeAccountRepositoryMock.Verify(repo => repo.GetAll(), Times.Once);
+        administrativeAccountRepositoryMock.Verify(repo => repo.FindAll(), Times.Once);
         Assert.NotNull(result);
         Assert.Equal(3, result.Count());
     }
@@ -159,7 +159,7 @@ public class AdministrativeAccountServiceTest
     {
         // Arrange        
         var account = mockAccountList.First();        
-        var accountDto = MockAdministrativeAccount.Instance.GetFakerDto(account);
+        var accountDto = MockAdminAccount.Instance.GetFakerDto(account);
         account.Login.Password = accountDto.Password;
         var loginDto = new LoginDto { Email = accountDto.Email, Password = accountDto.Password };
         administrativeAccountRepositoryMock.Setup(repo => repo.Find(It.IsAny<Expression<Func<AdminAccount, bool>>>())).Returns(mockAccountList.AsQueryable());

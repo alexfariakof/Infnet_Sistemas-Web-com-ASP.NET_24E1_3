@@ -15,7 +15,7 @@ public class PlaylistMapTest
         using (var context = new MockRegisterContext(options))
         {
             var builder = new ModelBuilder(new ConventionSet());
-            var configuration = new PlaylistMap(new Repository.Constants.BaseConstants());
+            var configuration = new PlaylistMap(new Repository.Constants.DefaultValueSqlConstants());
 
             configuration.Configure(builder.Entity<Playlist>());
 

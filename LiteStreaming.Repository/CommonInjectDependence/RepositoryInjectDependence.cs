@@ -2,10 +2,10 @@
 using Domain.Account.Agreggates;
 using Domain.Streaming.Agreggates;
 using Repository.Persistency;
-using Repository.Interfaces;
 using Domain.Administrative.Agreggates;
 using Repository.Persistency.Account;
 using Repository.Persistency.Streaming;
+using Repository.Persistency.Abstractions.Interfaces;
 
 namespace Repository.CommonInjectDependence;
 public static class RepositoryInjectDependence

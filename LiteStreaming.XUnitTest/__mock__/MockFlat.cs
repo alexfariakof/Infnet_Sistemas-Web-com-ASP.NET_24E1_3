@@ -35,6 +35,16 @@ public class MockFlat
         return flatList;
     }
 
+    public List<FlatDto> GetListDtoFaker(int count = 3)
+    {
+        var flatList = new List<FlatDto>();
+        for (var i = 0; i < count; i++)
+        {
+            flatList.Add(GetFakerDto());
+        }
+        return flatList;
+    }
+
     public FlatDto GetFakerDto(Guid? idUsuario = null)
     {
             var fakeFlatDto = new Faker<FlatDto>()

@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 using Application.Streaming.Dto;
 using AutoMapper;
 using Domain.Streaming.Agreggates;
-using Repository.Interfaces;
+using Repository.Persistency.Abstractions.Interfaces;
 
 namespace Application.Streaming;
 public class GenreServiceTest
@@ -59,7 +59,7 @@ public class GenreServiceTest
         var result = genreService.FindAll();
 
         // Assert
-        genreRepositoryMock.Verify(repo => repo.GetAll(), Times.Once);
+        genreRepositoryMock.Verify(repo => repo.FindAll(), Times.Once);
         mapperMock.Verify(mapper => mapper.Map<List<GenreDto>>(It.IsAny<List<Genre>>()), Times.Once);
         Assert.NotNull(result);
         Assert.Equal(mockGenreList.Count, result.Count);

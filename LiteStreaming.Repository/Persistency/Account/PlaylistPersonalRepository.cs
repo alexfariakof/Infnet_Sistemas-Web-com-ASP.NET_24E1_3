@@ -1,6 +1,6 @@
 ﻿using Domain.Account.Agreggates;
 using Repository.Persistency.Abstractions;
-using Repository.Interfaces;
+using Repository.Persistency.Abstractions.Interfaces;
 
 namespace Repository.Persistency.Account;
 public class PlaylistPersonalRepository : BaseRepository<PlaylistPersonal>, IRepository<PlaylistPersonal>

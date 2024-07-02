@@ -1,30 +1,34 @@
 ﻿using Repository;
 
 namespace DataSeeders.Administrative;
+
 public class DataSeederAdmin : IDataSeederAdmin
 {
     private readonly RegisterContextAdmin _context;
+
     public DataSeederAdmin(RegisterContextAdmin context)
     {
         _context = context;
     }
+
     public void SeedData()
     {
         try
         {
-            if (_context.Database.CanConnect())
+            if (_context.Database.EnsureCreated())
             {
-                Console.WriteLine("Banco de dados já existe. Não será recriado.");
-                return;
+                Console.WriteLine("Banco de dados administrativo foi criado.");
+
+                new DataSeederAdminAccount(_context).SeedData();
             }
-
-            _context.Database.EnsureDeleted();
-            _context.Database.EnsureCreated();
-
-            new DataSeederAdmin(_context).SeedData();
+            else
+            {
+                Console.WriteLine("Banco de dados administrativo já existia. Não será recriado.");
+            }
         }
-        catch
+        catch (Exception ex)
         {
+            Console.WriteLine($"Erro ao verificar ou criar o banco de dados administrativo: {ex.Message}");
             throw;
         }
     }

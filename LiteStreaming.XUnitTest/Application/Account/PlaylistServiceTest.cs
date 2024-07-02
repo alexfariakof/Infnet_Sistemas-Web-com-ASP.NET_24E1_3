@@ -3,9 +3,8 @@ using System.Linq.Expressions;
 using AutoMapper;
 using Domain.Account.Agreggates;
 using Application.Streaming.Dto;
-using Repository.Interfaces;
 using Domain.Streaming.Agreggates;
-using Castle.Core.Resource;
+using Repository.Persistency.Abstractions.Interfaces;
 
 namespace Application.Streaming;
 public class PlaylistPersonalServiceTest
@@ -72,7 +71,7 @@ public class PlaylistPersonalServiceTest
         // Arrange
         var playlistPersonalDtos = MockPlaylistPersonal.Instance.GetDtoListFromPlaylistPersonalList(mockPlaylistPersonalList);
         mapperMock.Setup(mapper => mapper.Map<List<PlaylistPersonalDto>>(It.IsAny<IEnumerable<PlaylistPersonal>>())).Returns(playlistPersonalDtos);
-        playlistPersonalRepositoryMock.Setup(repo => repo.GetAll()).Returns(mockPlaylistPersonalList);
+        playlistPersonalRepositoryMock.Setup(repo => repo.FindAll()).Returns(mockPlaylistPersonalList);
 
         // Act
         var result = playlistPersonalService.FindAll();

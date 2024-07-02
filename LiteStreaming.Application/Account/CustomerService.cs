@@ -7,7 +7,8 @@ using Domain.Streaming.Agreggates;
 using Domain.Transactions.Agreggates;
 using Domain.Transactions.ValueObject;
 using LiteStreaming.Application.Abstractions;
-using Repository.Interfaces;
+using Repository.Persistency.Abstractions.Interfaces;
+using Microsoft.Data.SqlClient;
 
 namespace Application.Streaming;
 public class CustomerService : ServiceBase<CustomerDto, Customer>, IService<CustomerDto>, ICustomerService
@@ -68,14 +69,21 @@ public class CustomerService : ServiceBase<CustomerDto, Customer>, IService<Cust
 
     public List<CustomerDto> FindAll(Guid userId)
     {
-        var customers = this.Repository.GetAll().Where(c => c.Id == userId).ToList();
+        var customers = this.Repository.FindAll().Where(c => c.Id == userId).ToList();
         var result = this.Mapper.Map<List<CustomerDto>>(customers);
         return result;
     }
 
     public override List<CustomerDto> FindAll()
     {
-        var result = this.Mapper.Map<List<CustomerDto>>(this.Repository.GetAll());
+        var customers = this.Repository.FindAll().ToList();
+        var result = this.Mapper.Map<List<CustomerDto>>(customers);
+        return result;
+    }
+
+    public override List<CustomerDto> FindAllOrdered(string serachParams = null, string orderProperty = null, SortOrder sortOrder = 0)
+    {
+        var result = this.Mapper.Map<List<CustomerDto>>(this.Repository.FindAllOrdered(serachParams, orderProperty, sortOrder));
         return result;
     }
 

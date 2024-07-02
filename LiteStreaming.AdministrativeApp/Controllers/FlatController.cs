@@ -1,5 +1,4 @@
 ﻿using LiteStreaming.AdministrativeApp.Controllers.Abstractions;
-using LiteStreaming.AdministrativeApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Application.Streaming.Dto;
 using Microsoft.AspNetCore.Authorization;
@@ -7,17 +6,10 @@ using LiteStreaming.Application.Abstractions;
 
 namespace LiteStreaming.AdministrativeApp.Controllers;
 
-public class FlatController : BaseController<FlatDto>
+public class FlatController : UnitControllerBase<FlatDto>
 {
     public FlatController(IService<FlatDto> services): base(services)
     {
-    }
-
-
-    [Authorize]
-    public IActionResult Create()
-    {
-        return CreateView();
     }
 
     [HttpPost]
@@ -25,7 +17,7 @@ public class FlatController : BaseController<FlatDto>
     public IActionResult Save(FlatDto dto)
     {
         if (ModelState is { IsValid: false })
-            return CreateView();
+            return Create();
 
         try
         {
@@ -35,11 +27,11 @@ public class FlatController : BaseController<FlatDto>
         }
         catch (Exception ex)
         {
-            if (ex is ArgumentException argEx)
-                ViewBag.Alert = new AlertViewModel(AlertViewModel.AlertType.Warning, argEx.Message);
+            if (ex is ArgumentException argSaveEx)
+                ViewBag.Alert = WarningMessage(argSaveEx.Message);
             else
-                ViewBag.Alert = new AlertViewModel(AlertViewModel.AlertType.Danger, "Ocorreu um erro ao salvar os dados do plano.");
-            return CreateView();
+                ViewBag.Alert = ErrorMessage("Ocorreu um erro ao salvar os dados do plano.");
+            return Create();
         }
     }
 
@@ -58,10 +50,10 @@ public class FlatController : BaseController<FlatDto>
         }
         catch (Exception ex)
         {
-            if (ex is ArgumentException argEx)
-                ViewBag.Alert = new AlertViewModel(AlertViewModel.AlertType.Warning, argEx.Message);
+            if (ex is ArgumentException argUpdateEx)
+                ViewBag.Alert = WarningMessage(argUpdateEx.Message);
             else
-                ViewBag.Alert = new AlertViewModel(AlertViewModel.AlertType.Danger, $"Ocorreu um erro ao atualizar o plano { dto?.Name }.");
+                ViewBag.Alert = ErrorMessage($"Ocorreu um erro ao atualizar o plano { dto?.Name }.");
             return EditView();
         }
     }
@@ -76,12 +68,12 @@ public class FlatController : BaseController<FlatDto>
         }
         catch (Exception ex)
         {
-            if (ex is ArgumentException argEx)
-                ViewBag.Alert = new AlertViewModel(AlertViewModel.AlertType.Warning, argEx.Message);
+            if (ex is ArgumentException argEditEx)
+                ViewBag.Alert = WarningMessage(argEditEx.Message);
             else
-                ViewBag.Alert = new AlertViewModel(AlertViewModel.AlertType.Danger, "Ocorreu um erro ao editar os dados deste plano.");
+                ViewBag.Alert = ErrorMessage("Ocorreu um erro ao editar os dados deste plano.");
         }
-        return View(INDEX, this.Services.FindAll());
+        return IndexView();
     }
 
     [Authorize]
@@ -92,16 +84,16 @@ public class FlatController : BaseController<FlatDto>
             dto.UsuarioId = UserId;
             var result = this.Services.Delete(dto);
             if (result)
-                ViewBag.Alert = new AlertViewModel(AlertViewModel.AlertType.Success, $"Plano { dto?.Name } excluído.");
+                ViewBag.Alert = SuccessMessage($"Plano { dto?.Name } excluído.");
         }
         catch (Exception ex)
         {
-            if (ex is ArgumentException argEx)
-                ViewBag.Alert = new AlertViewModel(AlertViewModel.AlertType.Warning, argEx.Message);
+            if (ex is ArgumentException argDeleteEx)
+                ViewBag.Alert = WarningMessage(argDeleteEx.Message);
 
             else
-                ViewBag.Alert = new AlertViewModel(AlertViewModel.AlertType.Danger, $"Ocorreu um erro ao excluir o plano { dto?.Name }.");
+                ViewBag.Alert = ErrorMessage($"Ocorreu um erro ao excluir o plano { dto?.Name }.");
         }
-        return View(INDEX, this.Services.FindAll());
+        return IndexView();
     }
 }

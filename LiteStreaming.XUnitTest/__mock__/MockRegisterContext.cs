@@ -17,13 +17,13 @@ public class MockRegisterContext : DbContext
         modelBuilder.ApplyConfiguration(new UserMap());
         modelBuilder.ApplyConfiguration(new MerchantMap());
         modelBuilder.ApplyConfiguration(new AddressMap());
-        modelBuilder.ApplyConfiguration(new PlaylistPersonalMap(new Repository.Constants.BaseConstants()));
+        modelBuilder.ApplyConfiguration(new PlaylistPersonalMap(new Repository.Constants.DefaultValueSqlConstants()));
         modelBuilder.ApplyConfiguration(new SignitureMap());
-        modelBuilder.ApplyConfiguration(new AlbumMap(new Repository.Constants.BaseConstants()));
+        modelBuilder.ApplyConfiguration(new AlbumMap(new Repository.Constants.DefaultValueSqlConstants()));
         modelBuilder.ApplyConfiguration(new BandMap());
         modelBuilder.ApplyConfiguration(new FlatMap());
-        modelBuilder.ApplyConfiguration(new MusicMap(new Repository.Constants.BaseConstants()));
-        modelBuilder.ApplyConfiguration(new PlaylistMap(new Repository.Constants.BaseConstants()));
+        modelBuilder.ApplyConfiguration(new MusicMap(new Repository.Constants.DefaultValueSqlConstants()));
+        modelBuilder.ApplyConfiguration(new PlaylistMap(new Repository.Constants.DefaultValueSqlConstants()));
         modelBuilder.ApplyConfiguration(new CreditCardMap());
         modelBuilder.ApplyConfiguration(new CreditCardBrandMap());
         modelBuilder.ApplyConfiguration(new TransactionMap());

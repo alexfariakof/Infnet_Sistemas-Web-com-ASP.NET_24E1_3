@@ -8,7 +8,7 @@ using LiteStreaming.Application.Core.Interfaces.Query;
 
 namespace LiteStreaming.AdministrativeApp.Controllers;
 
-public class AlbumController : BaseController<AlbumDto>
+public class AlbumController : UnitControllerBase<AlbumDto>
 {
     private readonly IFindAll<BandDto> bandService;
     private readonly IFindAll<GenreDto> genreService;
@@ -19,7 +19,7 @@ public class AlbumController : BaseController<AlbumDto>
     }
 
     [Authorize]
-    public IActionResult Create()
+    public override IActionResult Create()
     {
         var genres = genreService.FindAll();
         var bands = bandService.FindAll();
@@ -48,9 +48,9 @@ public class AlbumController : BaseController<AlbumDto>
         catch (Exception ex)
         {
             if (ex is ArgumentException argEx)
-                ViewBag.Alert = new AlertViewModel(AlertViewModel.AlertType.Warning, argEx.Message);
+                ViewBag.Alert = WarningMessage(argEx.Message);
             else
-                ViewBag.Alert = new AlertViewModel(AlertViewModel.AlertType.Danger, "Ocorreu um erro ao salvar os dados do álbum.");
+                ViewBag.Alert = ErrorMessage("Ocorreu um erro ao salvar os dados do álbum.");
             return CreateView();
         }
     }
@@ -71,9 +71,9 @@ public class AlbumController : BaseController<AlbumDto>
         catch (Exception ex)
         {
             if (ex is ArgumentException argEx)
-                ViewBag.Alert = new AlertViewModel(AlertViewModel.AlertType.Warning, argEx.Message);
+                ViewBag.Alert = WarningMessage(argEx.Message);
             else
-                ViewBag.Alert = new AlertViewModel(AlertViewModel.AlertType.Danger, $"Ocorreu um erro ao atualizar o álbum {viewModel.Album?.Name }.");
+                ViewBag.Alert = ErrorMessage($"Ocorreu um erro ao atualizar o álbum {viewModel.Album?.Name }.");
             return EditView();
         }
     }
@@ -96,11 +96,11 @@ public class AlbumController : BaseController<AlbumDto>
         catch (Exception ex)
         {
             if (ex is ArgumentException argEx)
-                ViewBag.Alert = new AlertViewModel(AlertViewModel.AlertType.Warning, argEx.Message);
+                ViewBag.Alert = WarningMessage(argEx.Message);
             else
-                ViewBag.Alert = new AlertViewModel(AlertViewModel.AlertType.Danger, "Ocorreu um erro ao editar os dados deste álbum.");
+                ViewBag.Alert = ErrorMessage("Ocorreu um erro ao editar os dados deste álbum.");
         }
-        return View(INDEX, this.Services.FindAll());
+        return IndexView();
     }
 
     [Authorize]
@@ -111,16 +111,16 @@ public class AlbumController : BaseController<AlbumDto>
             dto.UsuarioId = UserId;
             var result = this.Services.Delete(dto);
             if (result)
-                ViewBag.Alert = new AlertViewModel(AlertViewModel.AlertType.Success, $"Álbum { dto?.Name } excluído.");
+                ViewBag.Alert = SuccessMessage($"Álbum { dto?.Name } excluído.");
         }
         catch (Exception ex)
         {
             if (ex is ArgumentException argEx)
-                ViewBag.Alert = new AlertViewModel(AlertViewModel.AlertType.Warning, argEx.Message);
+                ViewBag.Alert = WarningMessage(argEx.Message);
 
             else
-                ViewBag.Alert = new AlertViewModel(AlertViewModel.AlertType.Danger, $"Ocorreu um erro ao excluir o álbum { dto?.Name }.");
+                ViewBag.Alert = ErrorMessage($"Ocorreu um erro ao excluir o álbum { dto?.Name }.");
         }
-        return View(INDEX, this.Services.FindAll());
+        return IndexView();
     }
 }

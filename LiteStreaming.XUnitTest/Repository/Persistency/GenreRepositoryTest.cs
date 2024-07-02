@@ -69,7 +69,7 @@ public class GenreRepositoryTest
         contextMock.Setup(c => c.Set<Genre>()).Returns(dbSetMock.Object);
 
         // Act
-        var result = repository.GetAll();
+        var result = repository.FindAll();
 
         // Assert
         Assert.Equal(genres.Count, result.Count());

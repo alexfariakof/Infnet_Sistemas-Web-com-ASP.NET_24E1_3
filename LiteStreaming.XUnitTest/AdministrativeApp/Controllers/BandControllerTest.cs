@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using LiteStreaming.XunitTest.__mock__.Admin;
 using LiteStreaming.Application.Abstractions;
+using Microsoft.Data.SqlClient;
 
 namespace AdministrativeApp.Controllers;
 
@@ -30,15 +31,15 @@ public class BandControllerTest
     {
         // Arrange
         var bandsDto = MockBand.Instance.GetDtoListFromBandList(MockBand.Instance.GetListFaker());
-        bandServiceMock.Setup(service => service.FindAll()).Returns(bandsDto);
+        bandServiceMock.Setup(service => service.FindAllOrdered(It.IsAny<string?>(), It.IsAny<string?>(), It.IsAny<SortOrder>())).Returns(bandsDto);
 
         // Act
         var result = bandController.Index();
 
         // Assert
         var viewResult = Assert.IsType<ViewResult>(result);
-        var model = Assert.IsAssignableFrom<IEnumerable<BandDto>>(viewResult.Model);
-        Assert.Equal(bandsDto, model);
+        var model = Assert.IsAssignableFrom<PagerModel>(viewResult.Model);
+        Assert.Equal(bandsDto, model.GetItems<BandDto>());
     }
 
     [Fact]
