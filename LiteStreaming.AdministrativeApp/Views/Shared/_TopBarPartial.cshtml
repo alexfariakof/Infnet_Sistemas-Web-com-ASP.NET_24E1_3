@@ -10,17 +10,69 @@
     </div>
     <div>
         <ul class="pagination justify-content-center">
-            @for (var pge = Model.StartPage; pge <= Model.EndPage; pge++)
+            @if (Model.CurrentPage > 1)
             {
                 <li class="page-item">
                     <a class="page-link"
                        asp-action="@Model.Action"
-                       asp-route-pg="@pge"
+                       asp-route-pg="@Model.StartPage"
+                       asp-route-pageSize="@Model.PageSize"
                        asp-route-SearchText="@Model.SearchText">
-                        @pge
+                        First
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link"
+                       asp-action="@Model.Action"
+                       asp-route-pg="@(Model.CurrentPage-1)"
+                       asp-route-pageSize="@Model.PageSize"
+                       asp-route-SearchText="@Model.SearchText">
+                        Previous
                     </a>
                 </li>
             }
+            @for (var pge = Model.StartPage; pge <= Model.EndPage; pge++)
+            {
+                <li class="page-item @(pge==Model.CurrentPage ? "active": "")">
+                    @if (pge != Model.CurrentPage)
+                    {
+                        <a class="page-link"
+                           asp-action="@Model.Action"
+                           asp-route-pg="@pge"
+                           asp-route-pageSize="@Model.PageSize"
+                           asp-route-SearchText="@Model.SearchText">
+                            @pge
+                        </a>
+
+                    }
+                    else
+                    {
+                        <span class="page-link">@pge</span>
+                    }
+                </li>
+            }
+            @if (Model.CurrentPage < Model.EndPage)
+            {
+                <li class="page-item">
+                    <a class="page-link"
+                       asp-action="@Model.Action"
+                       asp-route-pg="@(Model.CurrentPage+1)"
+                       asp-route-pageSize="@Model.PageSize"
+                       asp-route-SearchText="@Model.SearchText">
+                        Next
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link"
+                       asp-action="@Model.Action"
+                       asp-route-pg="@Model.EndPage"
+                       asp-route-pageSize="@Model.PageSize"
+                       asp-route-SearchText="@Model.SearchText">
+                        Last
+                    </a>
+                </li>
+            }
+
         </ul>
     </div>
     <div>

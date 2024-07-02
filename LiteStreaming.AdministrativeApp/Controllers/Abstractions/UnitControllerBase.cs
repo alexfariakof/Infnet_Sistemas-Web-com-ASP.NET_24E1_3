@@ -11,10 +11,6 @@ namespace LiteStreaming.AdministrativeApp.Controllers.Abstractions;
 
 public abstract class UnitControllerBase<T> : Controller where T : class, new()
 {
-    const string SORT_PARAM_NAME = "SortParamName";
-    const string SORT_ICONS = "SortIcon";
-    const string SORT_ICON_ASC = "";
-    const string SORT_ICON_DESC = "";
     protected string INDEX { get; } = "Index";
     protected string CREATE { get;  } = "Create";    
     protected string EDIT { get; }  = "Edit";
@@ -42,12 +38,14 @@ public abstract class UnitControllerBase<T> : Controller where T : class, new()
         return sortModel;
     }
 
-    public virtual IActionResult Index(string sortExpression = null, string SearchText = "")
+    public virtual IActionResult Index(string sortExpression = null, string SearchText = "", int pg = 1,  int pageSize=5)
     {
-        var pagerModel = new PagerModel();                
-        pagerModel.SortModel = ApllySortOrder(sortExpression);
-        pagerModel.SearchText = SearchText;
-        pagerModel.SetItems<T>(this.Services.FindAllSorted(SearchText, sortExpression, pagerModel.SortModel.SortOrder));
+        var sortModel = ApllySortOrder(sortExpression);
+        var items = this.Services.FindAllSorted(SearchText, sortExpression, sortModel.SortOrder);
+        var pagerModel = new PagerModel(items.Count, pg, pageSize);
+        pagerModel.SortModel = sortModel;
+        pagerModel.SearchText = SearchText;        
+        pagerModel.SetItems<T>(items);
         return View(pagerModel);
     }
 
