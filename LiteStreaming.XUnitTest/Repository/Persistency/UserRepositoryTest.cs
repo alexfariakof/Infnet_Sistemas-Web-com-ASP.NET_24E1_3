@@ -72,7 +72,7 @@ public class UserRepositoryTest
         contextMock.Setup(c => c.Set<User>()).Returns(dbSetMock.Object);
 
         // Act
-        var result = repository.GetAll();
+        var result = repository.FindAll();
 
         // Assert
         Assert.Equal(users.Count, result.Count());

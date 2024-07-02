@@ -21,12 +21,12 @@ public class PlaylistDto : BaseDto, IValidatableObject
                 yield return new ValidationResult("Name is required for PUT requests.", new[] { nameof(Name) });
             }
 
-            if (method.Equals("PUT", StringComparison.OrdinalIgnoreCase) && Id == null)
+            if (method.Equals("PUT", StringComparison.OrdinalIgnoreCase) && Id == Guid.Empty)
             {
                 yield return new ValidationResult("ID is required for PUT requests.", new[] { nameof(Id) });
             }
 
-            if (method.Equals("DELETE", StringComparison.OrdinalIgnoreCase) && Id == null)
+            if (method.Equals("DELETE", StringComparison.OrdinalIgnoreCase) && Id == Guid.Empty)
             {
                 yield return new ValidationResult("ID is required for delete requests.", new[] { nameof(Id) });
             }

@@ -13,9 +13,9 @@ namespace LiteStreaming.AdministrativeApp.Controllers;
 
 public class AccountController : Controller
 {
-    private readonly IAdministrativeAuthenticationService authenticationService;
+    private readonly IAdminAuthService authenticationService;
 
-    public AccountController(IAdministrativeAuthenticationService authenticationService) 
+    public AccountController(IAdminAuthService authenticationService) 
     {
         this.authenticationService = authenticationService;
     }

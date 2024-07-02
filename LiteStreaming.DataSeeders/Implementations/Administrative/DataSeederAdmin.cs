@@ -2,11 +2,11 @@
 
 namespace DataSeeders.Administrative;
 
-public class DataSeederAdministrative : IDataSeeder
+public class DataSeederAdmin : IDataSeederAdmin
 {
-    private readonly RegisterContextAdministrative _context;
+    private readonly RegisterContextAdmin _context;
 
-    public DataSeederAdministrative(RegisterContextAdministrative context)
+    public DataSeederAdmin(RegisterContextAdmin context)
     {
         _context = context;
     }
@@ -19,7 +19,7 @@ public class DataSeederAdministrative : IDataSeeder
             {
                 Console.WriteLine("Banco de dados administrativo foi criado.");
 
-                new DataSeederAdministrativeAccount(_context).SeedData();
+                new DataSeederAdminAccount(_context).SeedData();
             }
             else
             {

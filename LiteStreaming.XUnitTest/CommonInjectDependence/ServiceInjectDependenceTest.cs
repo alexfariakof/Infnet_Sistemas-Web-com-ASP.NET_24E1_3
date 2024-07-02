@@ -36,7 +36,7 @@ public class ServiceInjectDependenceTest
         services?.AddServicesAdministrativeApp();
 
         // Assert
-        Assert.NotNull(services?.Any(descriptor => descriptor.ServiceType == typeof(AdministrativeAccountService)));
+        Assert.NotNull(services?.Any(descriptor => descriptor.ServiceType == typeof(AdminAccountService)));
     }
 
 }

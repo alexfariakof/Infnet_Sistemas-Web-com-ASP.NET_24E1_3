@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Repository.Persistency.Abstractions;
+using Microsoft.EntityFrameworkCore;
 using Moq;
-using Repository.Abstractions;
 
 namespace Repository;
 public class TestEntity
@@ -81,7 +81,7 @@ public class RepositoryBaseTest
         contextMock.Setup(c => c.Set<TestEntity>()).Returns(dbSetMock.Object);
 
         // Act
-        var result = repository.GetAll();
+        var result = repository.FindAll();
 
         // Assert
         Assert.Equal(entities.Count, result.Count());

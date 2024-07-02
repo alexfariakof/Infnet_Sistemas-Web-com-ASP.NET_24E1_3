@@ -1,5 +1,4 @@
 ﻿using LiteStreaming.AdministrativeApp.Controllers.Abstractions;
-using LiteStreaming.AdministrativeApp.Models;
 using Application.Administrative.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
@@ -8,52 +7,42 @@ using LiteStreaming.Application.Abstractions;
 namespace LiteStreaming.AdministrativeApp.Controllers;
 
 [Authorize]
-public class UserController : BaseController<AdministrativeAccountDto>
+public class UserController : UnitControllerBase<AdminAccountDto>
 {
-    private readonly IService<AdministrativeAccountDto> administrativeAccountService;
-
-    public UserController(IService<AdministrativeAccountDto> administrativeAccountService): base(administrativeAccountService)
-    {
-        this.administrativeAccountService = administrativeAccountService;
-    }
-
-    public override IActionResult Index()
-    {
-        return View(this.administrativeAccountService.FindAll());
-    }
+    public UserController(IService<AdminAccountDto> administrativeAccountService) : base(administrativeAccountService) { }
 
     [Authorize(Roles = "Admin")]
-    public IActionResult Create()
+    public override IActionResult Create()
     {
-        return CreateView();
+        return View(CREATE);
     }
 
     [HttpPost]
     [Authorize(Roles = "Admin")]
-    public IActionResult Save(AdministrativeAccountDto dto)
+    public IActionResult Save(AdminAccountDto dto)
     {
         if (ModelState is { IsValid: false })
-            return CreateView();
+            return this.Create();
 
         try
         {
             dto.UsuarioId = UserId;
-            administrativeAccountService.Create(dto);
+            this.Services.Create(dto);
             return this.RedirectToIndexView();
         }
         catch (Exception ex)
         {
             if (ex is ArgumentException argEx)
-                ViewBag.Alert = new AlertViewModel(AlertViewModel.AlertType.Warning, argEx.Message);
+                ViewBag.Alert = WarningMessage(argEx.Message);
             else
-                ViewBag.Alert = new AlertViewModel(AlertViewModel.AlertType.Danger, "Ocorreu um erro ao salvar os dados do usuário.");
-            return CreateView();
+                ViewBag.Alert = ErrorMessage("Ocorreu um erro ao salvar os dados do usuário.");
+            return this.Create();
         }
     }
 
     [HttpPost]
     [Authorize(Roles = "Admin")]
-    public IActionResult Update(AdministrativeAccountDto dto)
+    public IActionResult Update(AdminAccountDto dto)
     {
         if (ModelState is { IsValid: false })
             return EditView();
@@ -61,15 +50,15 @@ public class UserController : BaseController<AdministrativeAccountDto>
         try
         {
             dto.UsuarioId = UserId;
-            administrativeAccountService.Update(dto);
+            this.Services.Update(dto);
             return this.RedirectToIndexView();
         }
         catch (Exception ex)
         {
             if (ex is ArgumentException argEx)
-                ViewBag.Alert = new AlertViewModel(AlertViewModel.AlertType.Warning, argEx.Message);
+                ViewBag.Alert = WarningMessage(argEx.Message);
             else
-                ViewBag.Alert = new AlertViewModel(AlertViewModel.AlertType.Danger, $"Ocorreu um erro ao atualizar os dados do usuário { dto?.Name }.");
+                ViewBag.Alert = ErrorMessage($"Ocorreu um erro ao atualizar os dados do usuário {dto?.Name}.");
             return EditView();
         }
     }
@@ -79,38 +68,37 @@ public class UserController : BaseController<AdministrativeAccountDto>
     {
         try
         {
-            var result = this.administrativeAccountService.FindById(Id);
+            var result = this.Services.FindById(Id);
             return View(result);
         }
         catch (Exception ex)
         {
             if (ex is ArgumentException argEx)
-                ViewBag.Alert = new AlertViewModel(AlertViewModel.AlertType.Warning, argEx.Message);
+                ViewBag.Alert = WarningMessage(argEx.Message);
 
             else
-                ViewBag.Alert = new AlertViewModel(AlertViewModel.AlertType.Danger, "Ocorreu um erro ao editar os dados deste usuário.");
+                ViewBag.Alert = ErrorMessage("Ocorreu um erro ao editar os dados deste usuário.");
         }
-        return View(INDEX, this.administrativeAccountService.FindAll());
+        return IndexView();
     }
 
-    
-    public IActionResult Delete(AdministrativeAccountDto dto)
+
+    public IActionResult Delete(AdminAccountDto dto)
     {
         try
         {
             dto.UsuarioId = UserId;
-            var result = this.administrativeAccountService.Delete(dto);
+            var result = this.Services.Delete(dto);
             if (result)
-                ViewBag.Alert = new AlertViewModel(AlertViewModel.AlertType.Success, $"Usuário { dto?.Name } excluído.");
+                ViewBag.Alert = SuccessMessage($"Usuário {dto?.Name} excluído.");
         }
         catch (Exception ex)
         {
             if (ex is ArgumentException argEx)
-                ViewBag.Alert = new AlertViewModel(AlertViewModel.AlertType.Warning, argEx.Message);
+                ViewBag.Alert = WarningMessage(argEx.Message);
             else
-                ViewBag.Alert = new AlertViewModel(AlertViewModel.AlertType.Danger, $"Ocorreu um erro ao excluir o usuário { dto?.Name }.");
+                ViewBag.Alert = ErrorMessage($"Ocorreu um erro ao excluir o usuário {dto?.Name}.");
         }
-        return View(INDEX, this.administrativeAccountService.FindAll());
-
+        return IndexView();
     }
 }

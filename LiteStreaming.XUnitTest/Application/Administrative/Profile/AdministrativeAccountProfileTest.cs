@@ -12,12 +12,12 @@ public class AdministrativeAccountProfileTest
     public void Map_AdministrativeAccount_To_AdministrativeAccountDto_IsValid()
     {
         // Arrange
-        var mapper = new Mapper(new MapperConfiguration(cfg => { cfg.AddProfile<AdministrativeAccountProfile>(); }));
+        var mapper = new Mapper(new MapperConfiguration(cfg => { cfg.AddProfile<AdminAccountProfile>(); }));
 
-        var account = MockAdministrativeAccount.Instance.GetFaker();
+        var account = MockAdminAccount.Instance.GetFaker();
 
         // Act
-        var accountDto = mapper.Map<AdministrativeAccountDto>(account);
+        var accountDto = mapper.Map<AdminAccountDto>(account);
 
         // Assert
         Assert.NotNull(account);
@@ -31,13 +31,13 @@ public class AdministrativeAccountProfileTest
     public void Map_AdministrativeAccountDto_To_AdministrativeAccount_IsValid()
     {
         // Arrange
-        var mapper = new Mapper(new MapperConfiguration(cfg => { cfg.AddProfile<AdministrativeAccountProfile>(); }));
+        var mapper = new Mapper(new MapperConfiguration(cfg => { cfg.AddProfile<AdminAccountProfile>(); }));
 
-        var fakeAccount = MockAdministrativeAccount.Instance.GetFaker();
-        var accountDto = MockAdministrativeAccount.Instance.GetFakerDto(fakeAccount);
+        var fakeAccount = MockAdminAccount.Instance.GetFaker();
+        var accountDto = MockAdminAccount.Instance.GetFakerDto(fakeAccount);
 
         // Act
-        var account = mapper.Map<AdministrativeAccount>(accountDto);
+        var account = mapper.Map<AdminAccount>(accountDto);
 
         // Assert
         Assert.NotNull(account);

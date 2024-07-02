@@ -5,8 +5,8 @@ using Domain.Account.Agreggates;
 using Domain.Account.ValueObject;
 using Domain.Streaming.Agreggates;
 using Domain.Transactions.Agreggates;
+using Repository.Persistency.Abstractions.Interfaces;
 using Moq;
-using Repository.Interfaces;
 using System.Linq.Expressions;
 
 namespace Application.Streaming;
@@ -128,7 +128,7 @@ public class CustomerServiceTest
         var result = customerService.FindAll();
 
         // Assert
-        customerRepositoryMock.Verify(repo => repo.GetAll(), Times.Once);
+        customerRepositoryMock.Verify(repo => repo.FindAll(), Times.Once);
         mapperMock.Verify(mapper => mapper.Map<List<CustomerDto>>(It.IsAny<List<Customer>>()), Times.Once);
 
         Assert.NotNull(result);
@@ -147,7 +147,7 @@ public class CustomerServiceTest
         var result = customerService.FindAll(userId);
 
         // Assert
-        customerRepositoryMock.Verify(repo => repo.GetAll(), Times.Once);
+        customerRepositoryMock.Verify(repo => repo.FindAll(), Times.Once);
         mapperMock.Verify(mapper => mapper.Map<List<CustomerDto>>(It.IsAny<List<Customer>>()), Times.Once);
 
         Assert.NotNull(result);

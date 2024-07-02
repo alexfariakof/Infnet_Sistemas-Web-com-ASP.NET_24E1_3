@@ -2,7 +2,7 @@
 using Repository.Abstractions;
 
 namespace Migrations.MySqlServer;
-public class MySqlServerContextAdministrative : BaseContextAdministrative<MySqlServerContextAdministrative>
+public class MySqlServerContextAdministrative : BaseContextAdmin<MySqlServerContextAdministrative>
 {
     public MySqlServerContextAdministrative(DbContextOptions<MySqlServerContextAdministrative> options) : base(options) { }
 }

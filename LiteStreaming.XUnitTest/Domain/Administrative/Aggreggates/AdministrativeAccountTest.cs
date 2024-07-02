@@ -8,7 +8,7 @@ public class AdministrativeAccountTest
     public void Should_Create_Administrative_Account_With_Login_And_Name()
     {
         // Arrange
-        var administrativeAccountMock = MockAdministrativeAccount.Instance.GetFaker();
+        var administrativeAccountMock = MockAdminAccount.Instance.GetFaker();
         var administrativeAccount = administrativeAccountMock;
 
         // Act - No need for action in this case

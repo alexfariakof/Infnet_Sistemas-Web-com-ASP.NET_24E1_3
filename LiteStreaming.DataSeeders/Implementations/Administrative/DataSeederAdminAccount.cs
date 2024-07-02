@@ -4,11 +4,11 @@ using Domain.Core.ValueObject;
 using Repository;
 
 namespace DataSeeders.Administrative;
-public class DataSeederAdministrativeAccount : IDataSeeder
+public class DataSeederAdminAccount : IDataSeederAdmin
 {
-    private readonly RegisterContextAdministrative _context;
+    private readonly RegisterContextAdmin _context;
 
-    public DataSeederAdministrativeAccount(RegisterContextAdministrative context)
+    public DataSeederAdminAccount(RegisterContextAdmin context)
     {
         _context = context;
     }
@@ -18,7 +18,7 @@ public class DataSeederAdministrativeAccount : IDataSeeder
         try
         {
 
-            var account = new AdministrativeAccount
+            var account = new AdminAccount
             {
                 Name = "Admnistrador User Test ",
                 Login = new Login { Email = "admin@user.com", Password = "12345T!" },
@@ -27,7 +27,7 @@ public class DataSeederAdministrativeAccount : IDataSeeder
 
             _context.Add(account);
 
-            account = new AdministrativeAccount
+            account = new AdminAccount
             {
                 Name = "Normal User Test",
                 Login = new Login { Email = "normal@user.com", Password = "12345T!" },

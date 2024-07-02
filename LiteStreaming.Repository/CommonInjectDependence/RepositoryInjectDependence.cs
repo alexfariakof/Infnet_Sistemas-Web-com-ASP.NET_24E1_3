@@ -2,17 +2,17 @@
 using Domain.Account.Agreggates;
 using Domain.Streaming.Agreggates;
 using Repository.Persistency;
-using Repository.Interfaces;
 using Domain.Administrative.Agreggates;
 using Repository.Persistency.Account;
 using Repository.Persistency.Streaming;
+using Repository.Persistency.Abstractions.Interfaces;
 
 namespace Repository.CommonInjectDependence;
 public static class RepositoryInjectDependence
 {
     public static IServiceCollection AddRepositoriesAdministrativeApp(this IServiceCollection services)
     {
-        services.AddScoped(typeof(IRepository<AdministrativeAccount>), typeof(AdminAccountRepository));
+        services.AddScoped(typeof(IRepository<AdminAccount>), typeof(AdminAccountRepository));
         services.AddScoped(typeof(IRepository<Flat>), typeof(FlatRepository));
         services.AddScoped(typeof(IRepository<Genre>), typeof(GenreRepository));
         services.AddScoped(typeof(IRepository<Band>), typeof(BandRepository));

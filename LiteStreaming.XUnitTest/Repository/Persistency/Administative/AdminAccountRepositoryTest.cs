@@ -7,20 +7,20 @@ using Domain.Administrative.ValueObject;
 namespace Repository.Persistency.Administrative;
 public class AdminAccountRepositoryTest
 {
-    private Mock<RegisterContextAdministrative> contextMock;
+    private Mock<RegisterContextAdmin> contextMock;
 
     public AdminAccountRepositoryTest()
     {
         // Arrange
-        var options = new DbContextOptionsBuilder<RegisterContextAdministrative>().UseInMemoryDatabase(databaseName: "TestDatabase_AdminAccountRepositoryTest").Options;
-        contextMock = new Mock<RegisterContextAdministrative>(options);
+        var options = new DbContextOptionsBuilder<RegisterContextAdmin>().UseInMemoryDatabase(databaseName: "TestDatabase_AdminAccountRepositoryTest").Options;
+        contextMock = new Mock<RegisterContextAdmin>(options);
     }
 
     [Fact]
     public void Save_Should_Add_Album_And_SaveChanges()
     {
         // Arrange
-        var mockAdmin = MockAdministrativeAccount.Instance.GetFaker();
+        var mockAdmin = MockAdminAccount.Instance.GetFaker();
         contextMock.Setup(c => c.Set<Perfil>().Find(It.IsAny<int>())).Returns(mockAdmin.PerfilType);
         var repository = new AdminAccountRepository(contextMock.Object);
         
@@ -38,7 +38,7 @@ public class AdminAccountRepositoryTest
     public void Update_Should_Update_Album_And_SaveChanges()
     {
         // Arrange        
-        var mockAdmin = MockAdministrativeAccount.Instance.GetFaker();
+        var mockAdmin = MockAdminAccount.Instance.GetFaker();
         contextMock.Setup(c => c.Set<Perfil>().Find(It.IsAny<int>())).Returns(mockAdmin.PerfilType);
         var repository = new AdminAccountRepository(contextMock.Object);
 
@@ -55,7 +55,7 @@ public class AdminAccountRepositoryTest
     {
         // Arrange
         var repository = new AdminAccountRepository(contextMock.Object);
-        var mockAdmin = MockAdministrativeAccount.Instance.GetFaker();
+        var mockAdmin = MockAdminAccount.Instance.GetFaker();
 
         // Act
         repository.Delete(mockAdmin);
@@ -70,12 +70,12 @@ public class AdminAccountRepositoryTest
     {
         // Arrange
         var repository = new AdminAccountRepository(contextMock.Object);
-        var adminAccount = MockAdministrativeAccount.Instance.GetListFaker(10);
+        var adminAccount = MockAdminAccount.Instance.GetListFaker(10);
         var dbSetMock = Usings.MockDbSet(adminAccount);
-        contextMock.Setup(c => c.Set<AdministrativeAccount>()).Returns(dbSetMock.Object);
+        contextMock.Setup(c => c.Set<AdminAccount>()).Returns(dbSetMock.Object);
 
         // Act
-        var result = repository.GetAll();
+        var result = repository.FindAll();
 
         // Assert
         Assert.Equal(adminAccount.Count, result.Count());
@@ -86,10 +86,10 @@ public class AdminAccountRepositoryTest
     {
         // Arrange
         var repository = new AdminAccountRepository(contextMock.Object);
-        var album = MockAdministrativeAccount.Instance.GetFaker();
+        var album = MockAdminAccount.Instance.GetFaker();
         var albumId = album.Id;
 
-        contextMock.Setup(c => c.Set<AdministrativeAccount>().Find(albumId)).Returns(album);
+        contextMock.Setup(c => c.Set<AdminAccount>().Find(albumId)).Returns(album);
 
         // Act
         var result = repository.GetById(albumId);
@@ -103,10 +103,10 @@ public class AdminAccountRepositoryTest
     {
         // Arrange
         var repository = new AdminAccountRepository(contextMock.Object);
-        var adminAccount = MockAdministrativeAccount.Instance.GetListFaker(3);
+        var adminAccount = MockAdminAccount.Instance.GetListFaker(3);
         var mockAdmin = adminAccount.First();
         var dbSetMock = Usings.MockDbSet(adminAccount);
-        contextMock.Setup(c => c.Set<AdministrativeAccount>()).Returns(dbSetMock.Object);
+        contextMock.Setup(c => c.Set<AdminAccount>()).Returns(dbSetMock.Object);
 
         // Act
         var result = repository.Find(f => f.Id == mockAdmin.Id);
@@ -121,11 +121,11 @@ public class AdminAccountRepositoryTest
     {
         // Arrange
         var repository = new AdminAccountRepository(contextMock.Object);
-        var adminAccount = MockAdministrativeAccount.Instance.GetListFaker(10);
+        var adminAccount = MockAdminAccount.Instance.GetListFaker(10);
         var mockAdmin = adminAccount.First();
 
         var dbSetMock = Usings.MockDbSet(adminAccount);
-        contextMock.Setup(c => c.Set<AdministrativeAccount>()).Returns(dbSetMock.Object);
+        contextMock.Setup(c => c.Set<AdminAccount>()).Returns(dbSetMock.Object);
 
         // Act
         var result = repository.Exists(f => f.Name == mockAdmin.Name);
@@ -139,9 +139,9 @@ public class AdminAccountRepositoryTest
     {
         // Arrange
         var repository = new AdminAccountRepository(contextMock.Object);
-        var adminAccount = MockAdministrativeAccount.Instance.GetListFaker(10);
+        var adminAccount = MockAdminAccount.Instance.GetListFaker(10);
         var dbSetMock = Usings.MockDbSet(adminAccount);
-        contextMock.Setup(c => c.Set<AdministrativeAccount>()).Returns(dbSetMock.Object);
+        contextMock.Setup(c => c.Set<AdminAccount>()).Returns(dbSetMock.Object);
 
         // Act
         var result = repository.Exists(f => f.Name == "Sample AdministrativeAccount");

@@ -6,68 +6,74 @@ using Domain.Administrative.Agreggates;
 using Domain.Administrative.ValueObject;
 using EasyCryptoSalt;
 using LiteStreaming.Application.Abstractions;
-using Repository.Interfaces;
+using Microsoft.Data.SqlClient;
+using Repository.Persistency.Abstractions.Interfaces;
 
 namespace Application.Administrative;
-public class AdministrativeAccountService : ServiceBase<AdministrativeAccountDto, AdministrativeAccount>, IService<AdministrativeAccountDto>, IAdministrativeAccountService, IAdministrativeAuthenticationService
+public class AdminAccountService : ServiceBase<AdminAccountDto, AdminAccount>, IService<AdminAccountDto>, IAdminAuthService
 {
     private readonly ICrypto _crypto;
-    public AdministrativeAccountService(IMapper mapper, IRepository<AdministrativeAccount> customerRepository, ICrypto crypto) : base(mapper, customerRepository)    
+    public AdminAccountService(IMapper mapper, IRepository<AdminAccount> customerRepository, ICrypto crypto) : base(mapper, customerRepository)    
     {
         _crypto = crypto;
     }
 
-    public override AdministrativeAccountDto Create(AdministrativeAccountDto dto)
+    public override AdminAccountDto Create(AdminAccountDto dto)
     {
         IsValidPerfilUsuario(dto);
 
         if (this.Repository.Exists(x => x.Login != null && x.Login.Email == dto.Email))
             throw new ArgumentException("Usuário já cadastrado.");        
 
-        var account = this.Mapper.Map<AdministrativeAccount>(dto);
+        var account = this.Mapper.Map<AdminAccount>(dto);
         this.Repository.Save(account);
-        var result = this.Mapper.Map<AdministrativeAccountDto>(account);
+        var result = this.Mapper.Map<AdminAccountDto>(account);
         return result;
     }
 
-    public override AdministrativeAccountDto FindById(Guid id)
+    public override AdminAccountDto FindById(Guid id)
     {
         var account = this.Repository.GetById(id);
-        var result = this.Mapper.Map<AdministrativeAccountDto>(account);
+        var result = this.Mapper.Map<AdminAccountDto>(account);
         return result;
     }
 
-    public List<AdministrativeAccountDto> FindAll(Guid userId)
+    public List<AdminAccountDto> FindAll(Guid userId)
     {
-        var accounts = this.Repository.GetAll().Where(c => c.Id == userId).ToList();
-        var result = this.Mapper.Map<List<AdministrativeAccountDto>>(accounts);
+        var accounts = this.Repository.FindAll().Where(c => c.Id == userId).ToList();
+        var result = this.Mapper.Map<List<AdminAccountDto>>(accounts);
         return result;
     }
 
-    public override List<AdministrativeAccountDto> FindAll()
+    public override List<AdminAccountDto> FindAll()
     {
-        var result = this.Mapper.Map<List<AdministrativeAccountDto>>(this.Repository.GetAll());
+        var result = this.Mapper.Map<List<AdminAccountDto>>(this.Repository.FindAll());
         return result;
     }
 
+    public override List<AdminAccountDto> FindAllOrdered(string serachParams = null, string orderProperty = null, SortOrder sortOrder = 0)
+    {
+        var result = this.Mapper.Map<List<AdminAccountDto>>(this.Repository.FindAllOrdered(serachParams, orderProperty, sortOrder));
+        return result;
+    }
 
-    public override AdministrativeAccountDto Update(AdministrativeAccountDto dto)
+    public override AdminAccountDto Update(AdminAccountDto dto)
     {
         IsValidPerfilUsuario(dto);
-        var account = this.Mapper.Map<AdministrativeAccount>(dto);
+        var account = this.Mapper.Map<AdminAccount>(dto);
         this.Repository.Update(account);
-        return this.Mapper.Map<AdministrativeAccountDto>(account);
+        return this.Mapper.Map<AdminAccountDto>(account);
     }
 
-    public override bool Delete(AdministrativeAccountDto dto)
+    public override bool Delete(AdminAccountDto dto)
     {
         IsValidPerfilUsuario(dto);
-        var account = this.Mapper.Map<AdministrativeAccount>(dto);
+        var account = this.Mapper.Map<AdminAccount>(dto);
         this.Repository.Delete(account);
         return true; 
     }
 
-    public AdministrativeAccountDto Authentication(LoginDto dto)
+    public AdminAccountDto Authentication(LoginDto dto)
     {
         bool credentialsValid = false;
         var account = this.Repository.Find(u => u.Login.Email.Equals(dto.Email)).FirstOrDefault();
@@ -79,11 +85,11 @@ public class AdministrativeAccountService : ServiceBase<AdministrativeAccountDto
         }
 
         if (credentialsValid)
-            return this.Mapper.Map<AdministrativeAccountDto>(account);
+            return this.Mapper.Map<AdminAccountDto>(account);
 
         throw new ArgumentException("Usuário Inválido!");
     }
-    private void IsValidPerfilUsuario(AdministrativeAccountDto dto)
+    private void IsValidPerfilUsuario(AdminAccountDto dto)
     {
         var administrador = this.Repository.Find(account => account.Id == dto.UsuarioId && account.PerfilType.Id == (int)Perfil.UserType.Admin).FirstOrDefault();
         if (administrador == null)

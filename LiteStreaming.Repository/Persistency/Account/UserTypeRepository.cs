@@ -1,6 +1,6 @@
 ﻿using Domain.Account.ValueObject;
-using Repository.Abstractions;
-using Repository.Interfaces;
+using Repository.Persistency.Abstractions;
+using Repository.Persistency.Abstractions.Interfaces;
 
 namespace Repository.Persistency.Account;
 public class UserTypeRepository : BaseRepository<PerfilUser>, IRepository<PerfilUser>

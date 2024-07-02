@@ -1,12 +1,12 @@
 ﻿using Domain.Administrative.ValueObject;
-using Repository.Abstractions;
-using Repository.Interfaces;
+using Repository.Persistency.Abstractions;
+using Repository.Persistency.Abstractions.Interfaces;
 
 namespace Repository.Persistency.Administrative;
 public class PerfilRepository : BaseRepository<Perfil>, IRepository<Perfil>
 {
-    public RegisterContextAdministrative Context { get;  }
-    public PerfilRepository(RegisterContextAdministrative context) : base(context)
+    public RegisterContextAdmin Context { get;  }
+    public PerfilRepository(RegisterContextAdmin context) : base(context)
     {
         Context = context;
     }

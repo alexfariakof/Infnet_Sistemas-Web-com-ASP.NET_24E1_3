@@ -27,7 +27,7 @@
     </Build>
   </PropertyGroup>
 
-  <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build;Rebuild" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)\node_modules') ">
+  <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build;Rebuild" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
     <!-- Ensure Node.js is installed -->
     <Exec Command="node --version" ContinueOnError="true">
       <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />

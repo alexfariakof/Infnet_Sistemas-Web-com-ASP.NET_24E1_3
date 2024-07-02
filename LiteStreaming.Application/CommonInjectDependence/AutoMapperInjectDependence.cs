@@ -8,7 +8,7 @@ public static class AutoMapperInjectDependence
 {
     public static IServiceCollection AddAutoMapperAdministrativeApp(this IServiceCollection services)
     {
-        services.AddAutoMapper(typeof(AdministrativeAccountProfile).Assembly);
+        services.AddAutoMapper(typeof(AdminAccountProfile).Assembly);
         services.AddAutoMapper(typeof(FlatProfile).Assembly);
         services.AddAutoMapper(typeof(GenreProfile).Assembly);
         return services;

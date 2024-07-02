@@ -3,7 +3,8 @@ using Application.Streaming.Dto.Interfaces;
 using AutoMapper;
 using Domain.Streaming.Agreggates;
 using LiteStreaming.Application.Abstractions;
-using Repository.Interfaces;
+using Repository.Persistency.Abstractions.Interfaces;
+using Microsoft.Data.SqlClient;
 
 namespace Application.Streaming;
 public class MusicService : ServiceBase<MusicDto, Music>, IService<MusicDto>, IMusicService
@@ -30,8 +31,14 @@ public class MusicService : ServiceBase<MusicDto, Music>, IService<MusicDto>, IM
 
     public override List<MusicDto> FindAll()
     {
-        var musics = Repository.GetAll();
+        var musics = Repository.FindAll();
         var result = Mapper.Map<List<MusicDto>>(musics);
+        return result;
+    }
+
+    public override List<MusicDto> FindAllOrdered(string serachParams = null, string orderProperty = null, SortOrder sortOrder = 0)
+    {
+        var result = this.Mapper.Map<List<MusicDto>>(this.Repository.FindAllOrdered(serachParams, orderProperty, sortOrder));
         return result;
     }
 

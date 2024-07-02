@@ -84,7 +84,7 @@ public class PlaylistPersonalRepositoryTest
         contextMock.Setup(c => c.Set<PlaylistPersonal>()).Returns(dbSetMock.Object);
 
         // Act
-        var result = repository.GetAll();
+        var result = repository.FindAll();
 
         // Assert
         Assert.Equal(PlaylistPersonals.Count, result.Count());

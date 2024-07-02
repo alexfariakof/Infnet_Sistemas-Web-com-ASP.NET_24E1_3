@@ -4,7 +4,8 @@ using AutoMapper;
 using Domain.Streaming.Agreggates;
 using LiteStreaming.Application.Abstractions;
 using LiteStreaming.Application.Core.Interfaces.Query;
-using Repository.Interfaces;
+using Repository.Persistency.Abstractions.Interfaces;
+using Microsoft.Data.SqlClient;
 
 namespace Application.Streaming;
 public class GenreService : ServiceBase<GenreDto, Genre>, IService<GenreDto>, IGenreService, IFindAll<GenreDto>
@@ -28,11 +29,17 @@ public class GenreService : ServiceBase<GenreDto, Genre>, IService<GenreDto>, IG
     }
     public override List<GenreDto> FindAll()
     {
-        var Genres = Repository.GetAll().ToList();
+        var Genres = Repository.FindAll().ToList();
         var result = Mapper.Map<List<GenreDto>>(Genres);
         return result;
     }
-        
+
+    public override List<GenreDto> FindAllOrdered(string serachParams = null, string orderProperty = null, SortOrder sortOrder = 0)
+    {
+        var result = this.Mapper.Map<List<GenreDto>>(this.Repository.FindAllOrdered(serachParams, orderProperty, sortOrder));
+        return result;
+    }
+
     public override GenreDto Update(GenreDto dto)
     {
         var Genre = Mapper.Map<Genre>(dto);

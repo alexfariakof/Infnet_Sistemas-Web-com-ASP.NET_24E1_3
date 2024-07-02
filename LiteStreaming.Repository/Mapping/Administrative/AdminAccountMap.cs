@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Repository.Mapping.Administrative;
-public class AdminAccountMap : IEntityTypeConfiguration<AdministrativeAccount>
+public class AdminAccountMap : IEntityTypeConfiguration<AdminAccount>
 {
-    public void Configure(EntityTypeBuilder<AdministrativeAccount> builder)
+    public void Configure(EntityTypeBuilder<AdminAccount> builder)
     {
         builder.ToTable("Account");
         builder.HasKey(account => account.Id);

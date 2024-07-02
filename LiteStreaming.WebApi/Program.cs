@@ -61,14 +61,14 @@ builder.Services.AddSwaggerGen(c => {
     });
 });
 
-builder.Services.AddDataSeeders();
+builder.Services.AddWebApiDataSeeders();
 
 if (builder.Environment.IsStaging())
-{    
-    builder.Services.AddDbContext<RegisterContext>(opt => opt.UseLazyLoadingProxies().UseInMemoryDatabase("Register_Database_InMemory"));    
+{
+    builder.Services.AddDbContext<RegisterContext>(opt => opt.UseLazyLoadingProxies().UseInMemoryDatabase("Register_Database_InMemory"));
 }
 else if (builder.Environment.IsDevelopment())
-{    
+{
     builder.Services.AddDbContext<RegisterContext>(options => options.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("MsSqlConnectionString")));
 }
 else if (builder.Environment.IsProduction())
@@ -88,7 +88,7 @@ else
 }
 
 //Add SigningConfigurations Configuratons
-builder.Services.AddSigningConfigurations(builder.Configuration); 
+builder.Services.AddSigningConfigurations(builder.Configuration);
 
 // Add AutoAuthConfigurations Configuratons
 builder.Services.AddAutoAuthenticationConfigurations();
@@ -111,7 +111,7 @@ builder.Services.AddServicesCryptography(builder.Configuration);
 var app = builder.Build();
 
 if (app.Environment.IsStaging())
-{    
+{
     app.Urls.Add("http://0.0.0.0:5146");
 }
 
@@ -122,7 +122,7 @@ if (app.Environment.IsDevelopment() || app.Environment.IsStaging() || app.Enviro
 {
     app.UseSwagger();
     app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", $"{appName} {appVersion}"); });
-    app.RunDataSeeders();
+    app.RunWebApiDataSeeders();
 }
 else
     app.UseHttpsRedirection();

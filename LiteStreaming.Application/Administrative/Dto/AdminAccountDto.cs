@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 namespace Application.Administrative.Dto;
-public class AdministrativeAccountDto : BaseDto
+public class AdminAccountDto : BaseDto
 {
     [JsonIgnore]
     public override Guid Id { get; set; }

@@ -5,7 +5,7 @@ namespace Domain.Administrative.ValueObject;
 
 public record Perfil : BasePerfil
 {
-    public virtual IList<AdministrativeAccount>? Users { get; set; }
+    public virtual IList<AdminAccount>? Users { get; set; }
 
     public Perfil() : base() { }
 

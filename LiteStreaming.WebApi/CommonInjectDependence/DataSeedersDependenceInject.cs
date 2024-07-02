@@ -3,12 +3,12 @@
 namespace WebApi.CommonInjectDependence;
 public static class DataSeedersDependenceInject
 {
-    public static void AddDataSeeders(this IServiceCollection services)
+    public static void AddWebApiDataSeeders(this IServiceCollection services)
     {
         services.AddTransient<IDataSeeder, DataSeeder>();
     }
 
-    public static void RunDataSeeders(this WebApplication app)
+    public static void RunWebApiDataSeeders(this WebApplication app)
     {
         using (var scope = app.Services.CreateScope())
         {

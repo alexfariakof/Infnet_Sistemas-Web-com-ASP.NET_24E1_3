@@ -3,10 +3,10 @@ using Application.Authentication;
 using AutoMapper;
 using Domain.Account.Agreggates;
 using Moq;
-using Repository.Interfaces;
 using System.Linq.Expressions;
 using EasyCryptoSalt;
 using Microsoft.Extensions.Options;
+using Repository.Persistency.Abstractions.Interfaces;
 
 namespace Application.Streaming;
 public class UserServiceTest

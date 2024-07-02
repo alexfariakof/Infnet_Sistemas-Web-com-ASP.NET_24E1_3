@@ -4,16 +4,16 @@ using Domain.Administrative.ValueObject;
 using Domain.Core.ValueObject;
 
 namespace Application.Administrative.Profile;
-public class AdministrativeAccountProfile : AutoMapper.Profile
+public class AdminAccountProfile : AutoMapper.Profile
 {
-    public AdministrativeAccountProfile() 
+    public AdminAccountProfile() 
     {
-        CreateMap<AdministrativeAccountDto, AdministrativeAccount>()
+        CreateMap<AdminAccountDto, AdminAccount>()
             .ForMember(dest => dest.PerfilType, opt =>  opt.MapFrom(src => new Perfil((Perfil.UserType)src.PerfilType)))
             .ForMember(dest => dest.Login, opt => opt.MapFrom(src => new Login() { Email = src.Email, Password = src.Password }))
             .ReverseMap();
 
-        CreateMap<AdministrativeAccount, AdministrativeAccountDto>()
+        CreateMap<AdminAccount, AdminAccountDto>()
             .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Login.Email))
             .ForMember(dest => dest.PerfilType, opt => opt.MapFrom(src => (int)src.PerfilType.Id))
             .AfterMap((s, d) =>

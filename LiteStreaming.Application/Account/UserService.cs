@@ -6,9 +6,9 @@ using AutoMapper;
 using Domain.Account.Agreggates;
 using Domain.Account.ValueObject;
 using EasyCryptoSalt;
-using Repository.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using Repository.Persistency.Abstractions.Interfaces;
 
 namespace Application.Streaming;
 public class UserService : IUserService

@@ -2,7 +2,7 @@
 using Application.Shared.Dto;
 
 namespace Application.Administrative.Interfaces;
-public interface IAdministrativeAuthenticationService
+public interface IAdminAuthService
 {
-    AdministrativeAccountDto Authentication(LoginDto dto);
+    AdminAccountDto Authentication(LoginDto dto);
 }

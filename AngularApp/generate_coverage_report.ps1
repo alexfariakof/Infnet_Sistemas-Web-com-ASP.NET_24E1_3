@@ -29,7 +29,7 @@ function Open-Report-Coverage {
 npm run test:coverage
 
 # Path onde é gerado o relatório coverage
-$reportPath = ".\coverage\angular-app\lcov-report"
+$reportPath = ".\coverage\lcov-report"
 
 
 # Encerra qualquer processo em segundo plano relacionado ao comando npm run test:watch

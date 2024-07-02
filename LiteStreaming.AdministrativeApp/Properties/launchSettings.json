@@ -1,17 +1,17 @@
 {
   "profiles": {
-    "Default": {
+    "Default In Memory": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "InMemory"
       },
-      "dotnetRunMessages": true,
-      "applicationUrl": "http://localhost:5171",
       "hotReloadEnabled": true,
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://localhost:7102;http://localhost:5171;",
       "nativeDebugging": true
     },
-    "AdministrativeApp https": {
+    "Default Development": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
@@ -19,7 +19,8 @@
       },
       "hotReloadEnabled": true,
       "dotnetRunMessages": true,
-      "applicationUrl": "https://localhost:7230;http://localhost:5171"
+      "applicationUrl": "https://localhost:7102;http://localhost:5171;",
+      "nativeDebugging": true
     },
     "Docker": {
       "commandName": "Docker",

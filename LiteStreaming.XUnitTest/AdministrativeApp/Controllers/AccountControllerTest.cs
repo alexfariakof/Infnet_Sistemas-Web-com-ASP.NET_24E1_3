@@ -10,12 +10,12 @@ using LiteStreaming.XunitTest.__mock__.Admin;
 namespace AdministrativeApp.Controllers;
 public class AccountControllerTest
 {
-    private readonly Mock<IAdministrativeAuthenticationService> authenticationServiceMock;
+    private readonly Mock<IAdminAuthService> authenticationServiceMock;
     private readonly AccountController accountController;
 
     public AccountControllerTest()
     {
-        authenticationServiceMock = new Mock<IAdministrativeAuthenticationService>();
+        authenticationServiceMock = new Mock<IAdminAuthService>();
         accountController = new AccountController(authenticationServiceMock.Object)
         {
             ControllerContext = new ControllerContext
@@ -70,7 +70,7 @@ public class AccountControllerTest
     public void SingIn_AuthenticationSuccessful_RedirectsToIndex()
     {
         // Arrange
-        var accountDto = MockAdministrativeAccount.Instance.GetFakerDto();
+        var accountDto = MockAdminAccount.Instance.GetFakerDto();
         accountDto.UsuarioId = accountDto.Id;
         var loginDto = new LoginDto { Email = accountDto.Email, Password = accountDto.Password };
         authenticationServiceMock.Setup(service => service.Authentication(It.IsAny<LoginDto>())).Returns(accountDto);

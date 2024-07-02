@@ -10,7 +10,7 @@ namespace WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class CustomerController : ControllerBaseTokensProps
+public class CustomerController : UnitControllerBase
 {
     private readonly IService<CustomerDto> _customerService;
     private readonly IPlaylistPersonalService _playlistService;

@@ -8,7 +8,7 @@ namespace WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class MerchantController : ControllerBaseTokensProps
+public class MerchantController : UnitControllerBase
 {
     private readonly IService<MerchantDto> _merchantService;
     public MerchantController(IService<MerchantDto> merchantService)

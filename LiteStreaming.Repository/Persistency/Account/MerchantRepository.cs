@@ -1,7 +1,7 @@
 ﻿using Domain.Account.Agreggates;
 using Domain.Account.ValueObject;
-using Repository.Abstractions;
-using Repository.Interfaces;
+using Repository.Persistency.Abstractions;
+using Repository.Persistency.Abstractions.Interfaces;
 
 namespace Repository.Persistency.Account;
 public class MerchantRepository : BaseRepository<Merchant>, IRepository<Merchant>

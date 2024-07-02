@@ -1,6 +1,6 @@
 ﻿using Domain.Streaming.Agreggates;
-using Repository.Abstractions;
-using Repository.Interfaces;
+using Repository.Persistency.Abstractions;
+using Repository.Persistency.Abstractions.Interfaces;
 
 namespace Repository.Persistency.Streaming;
 public class AlbumRepository : BaseRepository<Album>, IRepository<Album>

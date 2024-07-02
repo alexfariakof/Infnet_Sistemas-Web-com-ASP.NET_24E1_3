@@ -16,17 +16,17 @@ public class AdminAccountMapTest
             var builder = new ModelBuilder(new ConventionSet());
             var configuration = new AdminAccountMap();
 
-            configuration.Configure(builder.Entity<AdministrativeAccount>());
+            configuration.Configure(builder.Entity<AdminAccount>());
 
             var model = builder.Model;
-            var entityType = model.FindEntityType(typeof(AdministrativeAccount));
+            var entityType = model.FindEntityType(typeof(AdminAccount));
 
             // Act
             var idProperty = entityType.FindProperty("Id");
             var nameProperty = entityType.FindProperty("Name");
             var dtCreatedProperty = entityType.FindProperty("DtCreated");
-            var perfilTypeNavigation = entityType.FindNavigation(nameof(AdministrativeAccount.PerfilType));
-            var loginNavigation = entityType.FindNavigation(nameof(AdministrativeAccount.Login));
+            var perfilTypeNavigation = entityType.FindNavigation(nameof(AdminAccount.PerfilType));
+            var loginNavigation = entityType.FindNavigation(nameof(AdminAccount.Login));
 
             // Assert
             Assert.NotNull(idProperty);
