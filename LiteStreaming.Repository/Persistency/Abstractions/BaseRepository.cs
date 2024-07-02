@@ -104,23 +104,28 @@ public abstract class BaseRepository<T> where T : class, new()
     /// Retorna todas as entidades ordenadas pela propriedade especificada.
     /// </summary>
     /// <param name="serachParams">Parametro para realizar pesquisa. Se nula, a expressão de busca gerada é True.</param>
-    /// <param name="propertyToSort">Parametro para ordenar. Se nula, a primeira propriedade pública é usada.</param>
+    /// <param name="propertyToOrder">Parametro para ordenar. Se nula, a primeira propriedade pública é usada.</param>
     /// <param name="sortOrder">A ordem para classificar as entidades.</param>
     /// <returns>Uma coleção ordenada de entidades.</returns>
-    public virtual IEnumerable<T> FindAllSorted(string serachParams = null, string propertyToSort = null, SortOrder sortOrder = SortOrder.Ascending)
+    public virtual IEnumerable<T> FindAllOrdered(string serachParams = null, string propertyToOrder = null, SortOrder sortOrder = SortOrder.Ascending)
     {
-
+        Expression<Func<T, object>>? sortExpression;
         Expression<Func<T, bool>> serachExpression = GetSearchExpressionFromParams(serachParams);
-        if (propertyToSort is null)
+        
+        if (propertyToOrder is null)
         {
-            return Context.Set<T>().Where(serachExpression).ToList();
+            sortExpression = GetOrderExpressionFromDefaultProperty();
+            if (sortOrder == SortOrder.Ascending)
+                return Context.Set<T>().Where(serachExpression).OrderBy(sortExpression).ToList();
+            else
+                return Context.Set<T>().Where(serachExpression).OrderByDescending(sortExpression).ToList();
         }
 
-        Expression<Func<T, object>>? sortExpression = TryGetSortExpressionFromProperty(propertyToSort)
-            ?? TryGetSortExpressionFromNavigation(propertyToSort)
-            ?? GetSortExpressionFromDefaultProperty();
+        sortExpression = TryGetOrderExpressionFromProperty(propertyToOrder)
+            ?? TryGetOrderExpressionFromNavigation(propertyToOrder)
+            ?? GetOrderExpressionFromDefaultProperty();
 
-        // Ordena a lista com base na expressão de acesso à propriedade
+        // Ordena a lista com base na expressão gerada 
         if (sortOrder == SortOrder.Ascending)
             return Context.Set<T>().Where(serachExpression).AsQueryable().OrderBy(sortExpression).ToList();
         else
@@ -193,7 +198,7 @@ public abstract class BaseRepository<T> where T : class, new()
     /// Obtém uma expressão de ordenação com base na primeira propriedade pública da entidade.
     /// </summary>
     /// <returns>Expressão para acessar a primeira propriedade pública.</returns>
-    private Expression<Func<T, object>> GetSortExpressionFromDefaultProperty()
+    private Expression<Func<T, object>> GetOrderExpressionFromDefaultProperty()
     {
         var prop = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance).FirstOrDefault();
 
@@ -209,7 +214,7 @@ public abstract class BaseRepository<T> where T : class, new()
     /// </summary>
     /// <param name="propertyName">Parametro com o  nome da propriedade.</param>
     /// <returns>Expressão para acessar a propriedade especificada, ou null se não for encontrada.</returns>
-    private Expression<Func<T, object>>? TryGetSortExpressionFromProperty(string propertyName)
+    private Expression<Func<T, object>>? TryGetOrderExpressionFromProperty(string propertyName)
     {
         var prop = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance)
                    .FirstOrDefault(p => string.Equals(p.Name, propertyName, StringComparison.OrdinalIgnoreCase));
@@ -227,7 +232,7 @@ public abstract class BaseRepository<T> where T : class, new()
     /// </summary>
     /// <param name="propertyName">Parametro com o nome da propriedade de navegação.</param>
     /// <returns>Expressão para acessar a propriedade de navegação especificada, ou null se não for encontrada.</returns>
-    private Expression<Func<T, object>>? TryGetSortExpressionFromNavigation(string propertyName)
+    private Expression<Func<T, object>>? TryGetOrderExpressionFromNavigation(string propertyName)
     {
         var navigations = Context.Model.FindEntityType(typeof(T))?.GetNavigations();
         if (navigations != null)

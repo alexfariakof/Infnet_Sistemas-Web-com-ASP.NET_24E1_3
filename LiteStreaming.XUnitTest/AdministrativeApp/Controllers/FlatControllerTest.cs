@@ -31,7 +31,7 @@ public class FlatControllerTest
     {
         // Arrange
         var flatsDto = MockFlat.Instance.GetDtoListFromFlatList(MockFlat.Instance.GetListFaker());
-        flatServiceMock.Setup(service => service.FindAllSorted(It.IsAny<string?>(), It.IsAny<string?>(), It.IsAny<SortOrder>())).Returns(flatsDto);
+        flatServiceMock.Setup(service => service.FindAllOrdered(It.IsAny<string?>(), It.IsAny<string?>(), It.IsAny<SortOrder>())).Returns(flatsDto);
 
         // Act
         var result = flatController.Index();

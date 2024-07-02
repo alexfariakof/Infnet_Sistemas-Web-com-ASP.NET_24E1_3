@@ -41,7 +41,7 @@ public abstract class UnitControllerBase<T> : Controller where T : class, new()
     public virtual IActionResult Index(string sortExpression = null, string SearchText = "", int pg = 1,  int pageSize=5)
     {
         var sortModel = ApllySortOrder(sortExpression);
-        var items = this.Services.FindAllSorted(SearchText, sortExpression, sortModel.SortOrder);
+        var items = this.Services.FindAllOrdered(SearchText, sortExpression, sortModel.SortOrder);
         var pagerModel = new PagerModel(items.Count, pg, pageSize);
         pagerModel.SortModel = sortModel;
         pagerModel.SearchText = SearchText;        

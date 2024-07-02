@@ -31,7 +31,7 @@ public class PlaylistControllerTest
     {
         // Arrange
         var playlistsDto = MockPlaylist.Instance.GetDtoListFromPlaylistList(MockPlaylist.Instance.GetListFaker());
-        playlistServiceMock.Setup(service => service.FindAllSorted(It.IsAny<string?>(), It.IsAny<string?>(), It.IsAny<SortOrder>())).Returns(playlistsDto);
+        playlistServiceMock.Setup(service => service.FindAllOrdered(It.IsAny<string?>(), It.IsAny<string?>(), It.IsAny<SortOrder>())).Returns(playlistsDto);
 
         // Act
         var result = playlistController.Index();

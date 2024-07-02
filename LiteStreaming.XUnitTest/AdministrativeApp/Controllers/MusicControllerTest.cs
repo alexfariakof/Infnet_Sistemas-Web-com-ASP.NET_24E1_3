@@ -43,7 +43,7 @@ public class MusicControllerTest
     {
         // Arrange
         var musicsDto = MockMusic.Instance.GetDtoListFromMusicList(MockMusic.Instance.GetListFaker());
-        musicServiceMock.Setup(service => service.FindAllSorted(It.IsAny<string?>(), It.IsAny<string?>(), It.IsAny<SortOrder>())).Returns(musicsDto);
+        musicServiceMock.Setup(service => service.FindAllOrdered(It.IsAny<string?>(), It.IsAny<string?>(), It.IsAny<SortOrder>())).Returns(musicsDto);
 
         // Act
         var result = musicController.Index();

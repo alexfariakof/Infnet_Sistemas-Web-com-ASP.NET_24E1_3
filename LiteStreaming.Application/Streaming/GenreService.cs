@@ -34,9 +34,9 @@ public class GenreService : ServiceBase<GenreDto, Genre>, IService<GenreDto>, IG
         return result;
     }
 
-    public override List<GenreDto> FindAllSorted(string serachParams = null, string sortProperty = null, SortOrder sortOrder = 0)
+    public override List<GenreDto> FindAllOrdered(string serachParams = null, string orderProperty = null, SortOrder sortOrder = 0)
     {
-        var result = this.Mapper.Map<List<GenreDto>>(this.Repository.FindAllSorted(serachParams, sortProperty, sortOrder));
+        var result = this.Mapper.Map<List<GenreDto>>(this.Repository.FindAllOrdered(serachParams, orderProperty, sortOrder));
         return result;
     }
 

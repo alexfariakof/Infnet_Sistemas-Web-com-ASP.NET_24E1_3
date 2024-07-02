@@ -31,7 +31,7 @@ public class BandControllerTest
     {
         // Arrange
         var bandsDto = MockBand.Instance.GetDtoListFromBandList(MockBand.Instance.GetListFaker());
-        bandServiceMock.Setup(service => service.FindAllSorted(It.IsAny<string?>(), It.IsAny<string?>(), It.IsAny<SortOrder>())).Returns(bandsDto);
+        bandServiceMock.Setup(service => service.FindAllOrdered(It.IsAny<string?>(), It.IsAny<string?>(), It.IsAny<SortOrder>())).Returns(bandsDto);
 
         // Act
         var result = bandController.Index();

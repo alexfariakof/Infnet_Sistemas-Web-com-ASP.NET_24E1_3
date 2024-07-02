@@ -31,7 +31,7 @@ public class GenreControllerTest
     {
         // Arrange
         var genresDto = MockGenre.Instance.GetDtoListFromGenreList(MockGenre.Instance.GetListFaker());
-        genreServiceMock.Setup(service => service.FindAllSorted(It.IsAny<string?>(), It.IsAny<string?>(), It.IsAny<SortOrder>())).Returns(genresDto);
+        genreServiceMock.Setup(service => service.FindAllOrdered(It.IsAny<string?>(), It.IsAny<string?>(), It.IsAny<SortOrder>())).Returns(genresDto);
 
         // Act
         var result = genreController.Index();

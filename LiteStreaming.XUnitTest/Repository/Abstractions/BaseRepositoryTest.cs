@@ -187,7 +187,7 @@ public sealed class BaseRepositoryTest
         dbSetMock.As<IQueryable<MokcEntity>>().Setup(m => m.ElementType).Returns(entities.ElementType);
         dbSetMock.As<IQueryable<MokcEntity>>().Setup(m => m.GetEnumerator()).Returns(entities.GetEnumerator());
 
-        var result = repository.FindAllSorted();
+        var result = repository.FindAllOrdered();
 
         Assert.Equivalent(entities.ToList(), result);
     }  

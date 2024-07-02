@@ -37,9 +37,9 @@ public class AlbumService : ServiceBase<AlbumDto, Album>, IService<AlbumDto>, IA
         return result;
     }
 
-    public override List<AlbumDto> FindAllSorted(string serachParams = null, string sortProperty = null, SortOrder sortOrder = 0)
+    public override List<AlbumDto> FindAllOrdered(string serachParams = null, string orderProperty = null, SortOrder sortOrder = 0)
     {
-        var result = this.Mapper.Map<List<AlbumDto>>(this.Repository.FindAllSorted(serachParams, sortProperty, sortOrder));
+        var result = this.Mapper.Map<List<AlbumDto>>(this.Repository.FindAllOrdered(serachParams, orderProperty, sortOrder));
         return result;
     }
 
