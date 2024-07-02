@@ -10,6 +10,7 @@ public class PagerModel: BasePageModel
     public int EndPage { get; private set; } 
     public int StartRecord { get; private set; }
     public int EndRecord { get; private set; }
+    public string? Action { get; private set; }
     public string? SearchText { get; set; }
     public SortModel? SortModel { get; set; }
 }

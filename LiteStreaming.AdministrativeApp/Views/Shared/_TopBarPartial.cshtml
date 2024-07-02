@@ -1,12 +1,27 @@
 ﻿@model PagerModel
 <div class="d-flex flex-row justify-content-between z-0">
-    <div >
-        <form asp-action="Index" >
-            <li class="input-group mx-0 p-0" >                
+    <div>
+        <form asp-action="Index">
+            <li class="input-group mx-0 p-0">
                 <input name="SearchText" type="text" class="form-control b-0 mx-0 " placeholder="Pesquisar ?" value="@Model.SearchText" @(User.Identity.IsAuthenticated ? "" : "disabled") />
                 <button class="btn btn-danger bi bi-search border-light me-2" type="submit" @(User.Identity.IsAuthenticated ? "" : "disabled")></button>
             </li>
         </form>
+    </div>
+    <div>
+        <ul class="pagination justify-content-center">
+            @for (var pge = Model.StartPage; pge <= Model.EndPage; pge++)
+            {
+                <li class="page-item">
+                    <a class="page-link"
+                       asp-action="@Model.Action"
+                       asp-route-pg="@pge"
+                       asp-route-SearchText="@Model.SearchText">
+                        @pge
+                    </a>
+                </li>
+            }
+        </ul>
     </div>
     <div>
         <a type="button" class="btn btn-info mb-2 text-light border-light fw-bold" role="button" href="@ViewContext.RouteData.Values["controller"].ToString()/Create">
