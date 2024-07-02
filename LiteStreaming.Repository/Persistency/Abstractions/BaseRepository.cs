@@ -75,7 +75,7 @@ public abstract class BaseRepository<T> where T : class, new()
     /// <summary>
     /// Encontra entidades que correspondem à expressão especificada.
     /// </summary>
-    /// <param name="expression">A expressão para filtrar entidades.</param>
+    /// <param name="expression">PArametro com a expressão para filtrar entidades.</param>
     /// <returns>Uma coleção de entidades que correspondem à expressão especificada.</returns>
     public virtual IEnumerable<T> Find(Expression<Func<T, bool>> expression)
     {
@@ -85,7 +85,7 @@ public abstract class BaseRepository<T> where T : class, new()
     /// <summary>
     /// Verifica se existem entidades que correspondem à expressão especificada.
     /// </summary>
-    /// <param name="expression">A expressão para filtrar entidades.</param>
+    /// <param name="expression">Parametro com a expressão para filtrar entidades.</param>
     /// <returns><c>true</c> se existirem entidades que correspondem à expressão especificada; caso contrário, <c>false</c>.</returns>
     public virtual bool Exists(Expression<Func<T, bool>> expression)
     {
@@ -103,7 +103,8 @@ public abstract class BaseRepository<T> where T : class, new()
     /// <summary>
     /// Retorna todas as entidades ordenadas pela propriedade especificada.
     /// </summary>
-    /// <param name="propertyToSort">A propriedade para ordenar. Se nula, a primeira propriedade pública é usada.</param>
+    /// <param name="serachParams">Parametro para realizar pesquisa. Se nula, a expressão de busca gerada é True.</param>
+    /// <param name="propertyToSort">Parametro para ordenar. Se nula, a primeira propriedade pública é usada.</param>
     /// <param name="sortOrder">A ordem para classificar as entidades.</param>
     /// <returns>Uma coleção ordenada de entidades.</returns>
     public virtual IEnumerable<T> FindAllSorted(string serachParams = null, string propertyToSort = null, SortOrder sortOrder = SortOrder.Ascending)
@@ -131,7 +132,7 @@ public abstract class BaseRepository<T> where T : class, new()
         var parameter = Expression.Parameter(typeof(T), "x");
         Expression combinedExpression = Expression.Constant(true); // Expressão padrão que sempre é verdadeira
 
-        // Verificar propriedades públicas da entidade T
+        // Verificar propriedades publicas da entidade T
         foreach (var prop in typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance))
         {
             if (prop.PropertyType == typeof(string))
@@ -144,7 +145,7 @@ public abstract class BaseRepository<T> where T : class, new()
             }
         }
 
-        // Verificar propriedades de navegação
+        // Verificar propriedades publicas de navegação
         var navigations = Context?.Model?.FindEntityType(typeof(T))?.GetNavigations();
         if (navigations != null)
         {
@@ -172,7 +173,6 @@ public abstract class BaseRepository<T> where T : class, new()
         return Expression.Lambda<Func<T, bool>>(combinedExpression, parameter);
     }
 
-
     /// <summary>
     /// Obtém uma expressão de ordenação com base na primeira propriedade pública da entidade.
     /// </summary>
@@ -191,7 +191,7 @@ public abstract class BaseRepository<T> where T : class, new()
     /// <summary>
     /// Tenta obter uma expressão de ordenação com base no nome da propriedade especificada.
     /// </summary>
-    /// <param name="propertyName">O nome da propriedade.</param>
+    /// <param name="propertyName">Parametro com o  nome da propriedade.</param>
     /// <returns>Expressão para acessar a propriedade especificada, ou null se não for encontrada.</returns>
     private Expression<Func<T, object>>? TryGetSortExpressionFromProperty(string propertyName)
     {
@@ -209,7 +209,7 @@ public abstract class BaseRepository<T> where T : class, new()
     /// <summary>
     /// Tenta obter uma expressão de ordenação com base em uma propriedade de navegação.
     /// </summary>
-    /// <param name="propertyName">O nome da propriedade de navegação.</param>
+    /// <param name="propertyName">Parametro com o nome da propriedade de navegação.</param>
     /// <returns>Expressão para acessar a propriedade de navegação especificada, ou null se não for encontrada.</returns>
     private Expression<Func<T, object>>? TryGetSortExpressionFromNavigation(string propertyName)
     {
