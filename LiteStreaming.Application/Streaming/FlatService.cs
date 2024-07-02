@@ -3,7 +3,8 @@ using Application.Streaming.Dto.Interfaces;
 using AutoMapper;
 using Domain.Streaming.Agreggates;
 using LiteStreaming.Application.Abstractions;
-using Repository.Interfaces;
+using Repository.Persistency.Abstractions.Interfaces;
+using Microsoft.Data.SqlClient;
 
 namespace Application.Streaming;
 public class FlatService: ServiceBase<FlatDto, Flat>, IService<FlatDto>, IFlatService
@@ -27,11 +28,17 @@ public class FlatService: ServiceBase<FlatDto, Flat>, IService<FlatDto>, IFlatSe
     }
     public override List<FlatDto> FindAll()
     {
-        var flats = Repository.GetAll().ToList();
+        var flats = Repository.FindAll().ToList();
         var result = Mapper.Map<List<FlatDto>>(flats);
         return result;
     }
-        
+
+    public override List<FlatDto> FindAllOrdered(string serachParams = null, string orderProperty = null, SortOrder sortOrder = 0)
+    {
+        var result = this.Mapper.Map<List<FlatDto>>(this.Repository.FindAllOrdered(serachParams, orderProperty, sortOrder));
+        return result;
+    }
+
     public override FlatDto Update(FlatDto dto)
     {
         var flat = Mapper.Map<Flat>(dto);

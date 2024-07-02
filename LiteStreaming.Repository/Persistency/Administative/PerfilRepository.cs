@@ -1,6 +1,6 @@
 ﻿using Domain.Administrative.ValueObject;
 using Repository.Persistency.Abstractions;
-using Repository.Interfaces;
+using Repository.Persistency.Abstractions.Interfaces;
 
 namespace Repository.Persistency.Administrative;
 public class PerfilRepository : BaseRepository<Perfil>, IRepository<Perfil>

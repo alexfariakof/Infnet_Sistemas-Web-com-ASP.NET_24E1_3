@@ -11,11 +11,11 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Repository.Interfaces;
 using Domain.Account.ValueObject;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Repository.Persistency.Abstractions.Interfaces;
 
 public static class Usings
 {
@@ -56,7 +56,7 @@ public static class Usings
         _mock.Setup(repo => repo.Update(It.IsAny<T>()));
         _mock.Setup(repo => repo.Delete(It.IsAny<T>()));
 
-        _mock.Setup(repo => repo.GetAll())
+        _mock.Setup(repo => repo.FindAll())
             .Returns(() => { return _dataSet.AsEnumerable(); });
 
         _mock.Setup(repo => repo.GetById(It.IsAny<Guid>()))

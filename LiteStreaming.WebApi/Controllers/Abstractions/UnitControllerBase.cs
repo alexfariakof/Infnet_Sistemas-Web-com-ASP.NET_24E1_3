@@ -2,9 +2,9 @@
 using System.IdentityModel.Tokens.Jwt;
 
 namespace WebApi.Controllers.Abstractions;
-public abstract class ControllerBaseTokensProps : ControllerBase
+public abstract class UnitControllerBase : ControllerBase
 {
-    protected ControllerBaseTokensProps() { }
+    protected UnitControllerBase() { }
     protected Guid UserIdentity
     {
         get

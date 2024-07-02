@@ -20,7 +20,7 @@ public class PlaylistPersonalDto : IValidatableObject
             {
                 yield return new ValidationResult("Name is required for create a playlist.", new[] { nameof(Name) });
 
-                if (playlist.Musics != null && playlist.Musics.Any(m => m.Id == null))
+                if (playlist.Musics != null && playlist.Musics.Any(m => m?.Id == null))
                 {
                     yield return new ValidationResult("Musics[0].Id is required for create musics in playlist.", new[] { nameof(Musics) });
                 }

@@ -2,7 +2,7 @@
 using Repository.Abstractions;
 
 namespace Migrations.MsSqlServer;
-public class MsSqlServerContextAdministrative : BaseContextAdministrative<MsSqlServerContextAdministrative>
+public class MsSqlServerContextAdministrative : BaseContextAdmin<MsSqlServerContextAdministrative>
 {
     public MsSqlServerContextAdministrative(DbContextOptions<MsSqlServerContextAdministrative> options) : base(options) { }
 }

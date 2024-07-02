@@ -3,10 +3,10 @@ using Repository.CommonInjectDependence;
 using Repository.Persistency;
 using Domain.Account.Agreggates;
 using Domain.Streaming.Agreggates;
-using Repository.Interfaces;
 using Domain.Administrative.Agreggates;
 using Repository.Persistency.Account;
 using Repository.Persistency.Streaming;
+using Repository.Persistency.Abstractions.Interfaces;
 
 namespace CommonInjectDependence;
 public class RepositoryInjectDependenceTest

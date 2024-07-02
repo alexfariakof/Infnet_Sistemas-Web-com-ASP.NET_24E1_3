@@ -69,7 +69,7 @@ public class FlatRepositoryTest
         contextMock.Setup(c => c.Set<Flat>()).Returns(dbSetMock.Object);
 
         // Act
-        var result = repository.GetAll();
+        var result = repository.FindAll();
 
         // Assert
         Assert.Equal(flats.Count, result.Count());

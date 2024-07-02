@@ -1,6 +1,6 @@
 ﻿using Domain.Streaming.Agreggates;
 using Repository.Persistency.Abstractions;
-using Repository.Interfaces;
+using Repository.Persistency.Abstractions.Interfaces;
 
 namespace Repository.Persistency.Streaming;
 public class PlaylistRepository : BaseRepository<Playlist>, IRepository<Playlist>

@@ -5,8 +5,8 @@ using Domain.Account.Agreggates;
 using Domain.Account.ValueObject;
 using Domain.Streaming.Agreggates;
 using Domain.Transactions.Agreggates;
+using Repository.Persistency.Abstractions.Interfaces;
 using Moq;
-using Repository.Interfaces;
 using System.Linq.Expressions;
 
 namespace Application.Streaming;
@@ -107,7 +107,7 @@ public class MerchantServiceTest
         var result = merchantService.FindAll();
 
         // Assert
-        merchantRepositoryMock.Verify(repo => repo.GetAll(), Times.Once);
+        merchantRepositoryMock.Verify(repo => repo.FindAll(), Times.Once);
         mapperMock.Verify(mapper => mapper.Map<List<MerchantDto>>(It.IsAny<List<Merchant>>()), Times.Once);
 
         Assert.NotNull(result);
@@ -126,7 +126,7 @@ public class MerchantServiceTest
         var result = merchantService.FindAll(userId);
 
         // Assert
-        merchantRepositoryMock.Verify(repo => repo.GetAll(), Times.Once);
+        merchantRepositoryMock.Verify(repo => repo.FindAll(), Times.Once);
         mapperMock.Verify(mapper => mapper.Map<List<MerchantDto>>(It.IsAny<List<Merchant>>()), Times.Once);
 
         Assert.NotNull(result);

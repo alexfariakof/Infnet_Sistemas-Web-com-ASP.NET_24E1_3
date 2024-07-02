@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 using Application.Streaming.Dto;
 using AutoMapper;
 using Domain.Streaming.Agreggates;
-using Repository.Interfaces;
+using Repository.Persistency.Abstractions.Interfaces;
 
 namespace Application.Streaming;
 public class MusicServiceTest
@@ -65,7 +65,7 @@ public class MusicServiceTest
         var result = musicService.FindAll();
 
         // Assert
-        musicRepositoryMock.Verify(repo => repo.GetAll(), Times.Once);
+        musicRepositoryMock.Verify(repo => repo.FindAll(), Times.Once);
         mapperMock.Verify(mapper => mapper.Map<List<MusicDto>>(It.IsAny<IEnumerable<Music>>()), Times.Once);
 
         Assert.NotNull(result);

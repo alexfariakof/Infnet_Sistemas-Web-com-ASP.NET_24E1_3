@@ -70,7 +70,7 @@ public class AccountControllerTest
     public void SingIn_AuthenticationSuccessful_RedirectsToIndex()
     {
         // Arrange
-        var accountDto = MockAdministrativeAccount.Instance.GetFakerDto();
+        var accountDto = MockAdminAccount.Instance.GetFakerDto();
         accountDto.UsuarioId = accountDto.Id;
         var loginDto = new LoginDto { Email = accountDto.Email, Password = accountDto.Password };
         authenticationServiceMock.Setup(service => service.Authentication(It.IsAny<LoginDto>())).Returns(accountDto);

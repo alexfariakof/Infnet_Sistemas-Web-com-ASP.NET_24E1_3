@@ -1,6 +1,6 @@
 ﻿using Domain.Transactions.ValueObject;
 using Repository.Persistency.Abstractions;
-using Repository.Interfaces;
+using Repository.Persistency.Abstractions.Interfaces;
 
 namespace Repository.Persistency.Transactions;
 public class CreditCardBrandRepository : BaseRepository<CreditCardBrand>, IRepository<CreditCardBrand>

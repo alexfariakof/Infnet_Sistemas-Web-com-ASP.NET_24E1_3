@@ -6,7 +6,8 @@ using Domain.Administrative.Agreggates;
 using Domain.Administrative.ValueObject;
 using EasyCryptoSalt;
 using LiteStreaming.Application.Abstractions;
-using Repository.Interfaces;
+using Microsoft.Data.SqlClient;
+using Repository.Persistency.Abstractions.Interfaces;
 
 namespace Application.Administrative;
 public class AdminAccountService : ServiceBase<AdminAccountDto, AdminAccount>, IService<AdminAccountDto>, IAdminAuthService
@@ -39,17 +40,22 @@ public class AdminAccountService : ServiceBase<AdminAccountDto, AdminAccount>, I
 
     public List<AdminAccountDto> FindAll(Guid userId)
     {
-        var accounts = this.Repository.GetAll().Where(c => c.Id == userId).ToList();
+        var accounts = this.Repository.FindAll().Where(c => c.Id == userId).ToList();
         var result = this.Mapper.Map<List<AdminAccountDto>>(accounts);
         return result;
     }
 
     public override List<AdminAccountDto> FindAll()
     {
-        var result = this.Mapper.Map<List<AdminAccountDto>>(this.Repository.GetAll());
+        var result = this.Mapper.Map<List<AdminAccountDto>>(this.Repository.FindAll());
         return result;
     }
 
+    public override List<AdminAccountDto> FindAllOrdered(string serachParams = null, string orderProperty = null, SortOrder sortOrder = 0)
+    {
+        var result = this.Mapper.Map<List<AdminAccountDto>>(this.Repository.FindAllOrdered(serachParams, orderProperty, sortOrder));
+        return result;
+    }
 
     public override AdminAccountDto Update(AdminAccountDto dto)
     {

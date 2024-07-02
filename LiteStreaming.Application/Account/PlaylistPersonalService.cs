@@ -4,7 +4,8 @@ using AutoMapper;
 using Domain.Account.Agreggates;
 using Domain.Streaming.Agreggates;
 using LiteStreaming.Application.Abstractions;
-using Repository.Interfaces;
+using Repository.Persistency.Abstractions.Interfaces;
+using Microsoft.Data.SqlClient;
 
 namespace Application.Streaming;
 public class PlaylistPersonalService : ServiceBase<PlaylistPersonalDto, PlaylistPersonal>, IService<PlaylistPersonalDto>, IPlaylistPersonalService
@@ -48,7 +49,13 @@ public class PlaylistPersonalService : ServiceBase<PlaylistPersonalDto, Playlist
 
     public override List<PlaylistPersonalDto> FindAll()
     {
-        var result = Mapper.Map<List<PlaylistPersonalDto>>(Repository.GetAll());
+        var result = Mapper.Map<List<PlaylistPersonalDto>>(Repository.FindAll());
+        return result;
+    }
+
+    public override List<PlaylistPersonalDto> FindAllOrdered(string serachParams = null, string orderProperty = null, SortOrder sortOrder = 0)
+    {
+        var result = this.Mapper.Map<List<PlaylistPersonalDto>>(this.Repository.FindAllOrdered(serachParams, orderProperty, sortOrder));
         return result;
     }
 

@@ -7,8 +7,8 @@ using Repository.Constants;
 namespace Repository.Mapping.Account;
 public class PlaylistPersonalMap : IEntityTypeConfiguration<PlaylistPersonal>
 {
-    private readonly BaseConstants baseConstants;
-    public PlaylistPersonalMap(BaseConstants baseConstants): base() 
+    private readonly DefaultValueSqlConstants baseConstants;
+    public PlaylistPersonalMap(DefaultValueSqlConstants baseConstants): base() 
     {
         this.baseConstants = baseConstants;
     }

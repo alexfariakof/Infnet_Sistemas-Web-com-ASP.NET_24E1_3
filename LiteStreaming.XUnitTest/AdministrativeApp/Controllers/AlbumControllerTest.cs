@@ -6,6 +6,7 @@ using Moq;
 using LiteStreaming.Application.Core.Interfaces.Query;
 using LiteStreaming.XunitTest.__mock__.Admin;
 using LiteStreaming.Application.Abstractions;
+using Microsoft.Data.SqlClient;
 
 namespace AdministrativeApp.Controllers;
 
@@ -36,15 +37,15 @@ public class AlbumControllerTest
     {
         // Arrange
         var albumsDto = MockAlbum.Instance.GetDtoListFromAlbumList(MockAlbum.Instance.GetListFaker());
-        albumServiceMock.Setup(service => service.FindAll()).Returns(albumsDto);
+        albumServiceMock.Setup(service => service.FindAllOrdered(It.IsAny<string?>(), It.IsAny<string?>(), It.IsAny<SortOrder>())).Returns(albumsDto);
 
         // Act
         var result = albumController.Index();
 
         // Assert
         var viewResult = Assert.IsType<ViewResult>(result);
-        var model = Assert.IsAssignableFrom<IEnumerable<AlbumDto>>(viewResult.Model);
-        Assert.Equal(albumsDto, model);
+        var model = Assert.IsAssignableFrom<PagerModel>(viewResult.Model);
+        Assert.Equal(albumsDto, model.GetItems<AlbumDto>());
     }
 
     [Fact]

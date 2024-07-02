@@ -1,0 +1,83 @@
+﻿@model PagerModel
+<div class="d-flex flex-row justify-content-between z-0 mt-2">
+    <div>
+        <form asp-action="Index">
+            <li class="input-group mx-0 p-0 w-100">
+                <input name="SearchText" type="text" class="form-control b-0 mx-0 " placeholder="Filtro de dados" value="@Model.SearchText" @(User.Identity.IsAuthenticated ? "" : "disabled") />
+                <button class="btn btn-danger bi bi-search border-light me-2" type="submit" @(User.Identity.IsAuthenticated ? "" : "disabled")></button>
+            </li>
+        </form>
+    </div>
+    <div >
+        <ul class="pagination justify-content-center ">
+            @if (Model.CurrentPage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link @(User.Identity.IsAuthenticated ? "" : "disabled")"
+                       asp-action="@Model.Action"
+                       asp-route-pg="@Model.StartPage"
+                       asp-route-pageSize="@Model.PageSize"
+                       asp-route-SearchText="@Model.SearchText">
+                        First
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link @(User.Identity.IsAuthenticated ? "" : "disabled")"
+                       asp-action="@Model.Action"
+                       asp-route-pg="@(Model.CurrentPage-1)"
+                       asp-route-pageSize="@Model.PageSize"
+                       asp-route-SearchText="@Model.SearchText">
+                        Previous
+                    </a>
+                </li>
+            }
+            @for (var pge = Model.StartPage; pge <= Model.EndPage; pge++)
+            {
+                <li class="page-item @(pge==Model.CurrentPage ? "active": "")">
+                    @if (pge != Model.CurrentPage)
+                    {
+                        <a class="page-link @(User.Identity.IsAuthenticated ? "" : "disabled")"
+                           asp-action="@Model.Action"
+                           asp-route-pg="@pge"
+                           asp-route-pageSize="@Model.PageSize"
+                           asp-route-SearchText="@Model.SearchText">
+                            @pge
+                        </a>
+
+                    }
+                    else
+                    {
+                        <span class="page-link @(User.Identity.IsAuthenticated ? "" : "disabled")">@pge</span>
+                    }
+                </li>
+            }
+            @if (Model.CurrentPage < Model.EndPage)
+            {
+                <li class="page-item @(User.Identity.IsAuthenticated ? "" : "disabled")">
+                    <a class="page-link"
+                       asp-action="@Model.Action"
+                       asp-route-pg="@(Model.CurrentPage+1)"
+                       asp-route-pageSize="@Model.PageSize"
+                       asp-route-SearchText="@Model.SearchText">
+                        Next
+                    </a>
+                </li>
+                <li class="page-item @(User.Identity.IsAuthenticated ? "" : "disabled")">
+                    <a class="page-link"
+                       asp-action="@Model.Action"
+                       asp-route-pg="@Model.EndPage"
+                       asp-route-pageSize="@Model.PageSize"
+                       asp-route-SearchText="@Model.SearchText">
+                        Last
+                    </a>
+                </li>
+            }
+
+        </ul>
+    </div>
+    <div>
+        <a type="button" class="btn btn-info mb-2 me-2 text-light border-light fw-bold" role="button" href="@ViewContext.RouteData.Values["controller"].ToString()/Create">
+            <i class="bi bi-plus-circle"> Adicionar Registro</i>
+        </a>
+    </div>
+</div>

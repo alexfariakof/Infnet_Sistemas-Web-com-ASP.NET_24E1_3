@@ -69,7 +69,7 @@ public class BandRepositoryTest
         contextMock.Setup(c => c.Set<Band>()).Returns(dbSetMock.Object);
 
         // Act
-        var result = repository.GetAll();
+        var result = repository.FindAll();
 
         // Assert
         Assert.Equal(bands.Count, result.Count());

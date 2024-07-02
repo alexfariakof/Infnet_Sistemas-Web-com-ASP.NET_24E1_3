@@ -1,5 +1,4 @@
 ﻿using LiteStreaming.AdministrativeApp.Controllers.Abstractions;
-using LiteStreaming.AdministrativeApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Application.Streaming.Dto;
 using Microsoft.AspNetCore.Authorization;
@@ -7,24 +6,16 @@ using LiteStreaming.Application.Abstractions;
 
 namespace LiteStreaming.AdministrativeApp.Controllers;
 
-public class BandController : BaseController<BandDto>
+public class BandController : UnitControllerBase<BandDto>
 {
-    public BandController(IService<BandDto> services): base(services)
-    {
-    }
-
-    [Authorize]
-    public IActionResult Create()
-    {
-        return CreateView();
-    }
+    public BandController(IService<BandDto> services): base(services) { }
 
     [HttpPost]
     [Authorize]
     public IActionResult Save(BandDto dto)
     {
         if (ModelState is { IsValid: false })
-            return CreateView();
+            return Create();
 
         try
         {
@@ -35,10 +26,10 @@ public class BandController : BaseController<BandDto>
         catch (Exception ex)
         {
             if (ex is ArgumentException argEx)
-                ViewBag.Alert = new AlertViewModel(AlertViewModel.AlertType.Warning, argEx.Message);
+                ViewBag.Alert = WarningMessage(argEx.Message);
             else
-                ViewBag.Alert = new AlertViewModel(AlertViewModel.AlertType.Danger, "Ocorreu um erro ao salvar os dados da banda.");
-            return CreateView();
+                ViewBag.Alert = ErrorMessage("Ocorreu um erro ao salvar os dados da banda.");
+            return Create();
         }
     }
 
@@ -58,9 +49,9 @@ public class BandController : BaseController<BandDto>
         catch (Exception ex)
         {
             if (ex is ArgumentException argEx)
-                ViewBag.Alert = new AlertViewModel(AlertViewModel.AlertType.Warning, argEx.Message);
+                ViewBag.Alert = WarningMessage(argEx.Message);
             else
-                ViewBag.Alert = new AlertViewModel(AlertViewModel.AlertType.Danger, $"Ocorreu um erro ao atualizar a banda { dto?.Name }.");
+                ViewBag.Alert = ErrorMessage($"Ocorreu um erro ao atualizar a banda { dto?.Name }.");
             return EditView();
         }
     }
@@ -76,11 +67,11 @@ public class BandController : BaseController<BandDto>
         catch (Exception ex)
         {
             if (ex is ArgumentException argEx)
-                ViewBag.Alert = new AlertViewModel(AlertViewModel.AlertType.Warning, argEx.Message);
+                ViewBag.Alert = WarningMessage(argEx.Message);
             else
-                ViewBag.Alert = new AlertViewModel(AlertViewModel.AlertType.Danger, "Ocorreu um erro ao editar os dados desta banda.");
+                ViewBag.Alert = ErrorMessage("Ocorreu um erro ao editar os dados desta banda.");
         }
-        return View(INDEX, this.Services.FindAll());
+        return IndexView();
     }
 
     [Authorize]
@@ -91,16 +82,16 @@ public class BandController : BaseController<BandDto>
             dto.UsuarioId = UserId;
             var result = this.Services.Delete(dto);
             if (result)
-                ViewBag.Alert = new AlertViewModel(AlertViewModel.AlertType.Success, $"Banda { dto?.Name } excluída.");
+                ViewBag.Alert = SuccessMessage($"Banda { dto?.Name } excluída.");
         }
         catch (Exception ex)
         {
             if (ex is ArgumentException argEx)
-                ViewBag.Alert = new AlertViewModel(AlertViewModel.AlertType.Warning, argEx.Message);
+                ViewBag.Alert = WarningMessage(argEx.Message);
 
             else
-                ViewBag.Alert = new AlertViewModel(AlertViewModel.AlertType.Danger, $"Ocorreu um erro ao excluir a banda { dto?.Name }.");
+                ViewBag.Alert = ErrorMessage($"Ocorreu um erro ao excluir a banda { dto?.Name }.");
         }
-        return View(INDEX, this.Services.FindAll());
+        return IndexView();
     }
 }
