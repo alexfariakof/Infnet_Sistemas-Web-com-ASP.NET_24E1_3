@@ -108,14 +108,13 @@ public abstract class BaseRepository<T> where T : class, new()
     /// <returns>Uma coleção ordenada de entidades.</returns>
     public virtual IEnumerable<T> FindAllSorted(string serachParams = null, string propertyToSort = null, SortOrder sortOrder = SortOrder.Ascending)
     {
+        Expression<Func<T, bool>>? serachExpression = GetSearchExpressionFromParams(serachParams);
         if (propertyToSort is null)
         {
             if (String.IsNullOrEmpty(serachParams))
                 return FindAll();
-
-            Expression<Func<T, bool>>? serachExpression = GetSearchExpressionFromParams(serachParams);
             return Context.Set<T>().Where(serachExpression).ToList();
-        }            
+        }
 
         Expression<Func<T, object>>? sortExpression = TryGetSortExpressionFromProperty(propertyToSort)
             ?? TryGetSortExpressionFromNavigation(propertyToSort)
@@ -123,9 +122,9 @@ public abstract class BaseRepository<T> where T : class, new()
 
         // Ordena a lista com base na expressão de acesso à propriedade
         if (sortOrder == SortOrder.Ascending)
-            return Context.Set<T>().AsQueryable().OrderBy(sortExpression).ToList();
+            return Context.Set<T>().Where(serachExpression).AsQueryable().OrderBy(sortExpression).ToList();
         else
-            return Context.Set<T>().AsQueryable().OrderByDescending(sortExpression).ToList();
+            return Context.Set<T>().Where(serachExpression).AsQueryable().OrderByDescending(sortExpression).ToList();
     }
 
     private Expression<Func<T, bool>>? GetSearchExpressionFromParams(string searchParams)
