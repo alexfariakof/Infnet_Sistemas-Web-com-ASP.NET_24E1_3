@@ -128,11 +128,14 @@ public abstract class BaseRepository<T> where T : class, new()
     }
 
     private Expression<Func<T, bool>> GetSearchExpressionFromParams(string searchParams)
-    {
+    {        
         var parameter = Expression.Parameter(typeof(T), "x");
-        Expression combinedExpression = Expression.Constant(true); // Expressão padrão que sempre é verdadeira
+        if (searchParams == null) 
+            return Expression.Lambda<Func<T, bool>>(Expression.Constant(true), parameter);
 
-        // Verificar propriedades publicas da entidade T
+        Expression? combinedExpression = null;
+
+        // Verificar propriedades diretas da entidade T
         foreach (var prop in typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance))
         {
             if (prop.PropertyType == typeof(string))
@@ -141,11 +144,18 @@ public abstract class BaseRepository<T> where T : class, new()
                 var containsMethod = typeof(string).GetMethod("Contains", new[] { typeof(string) });
                 var containsExpression = Expression.Call(property, containsMethod, Expression.Constant(searchParams, typeof(string)));
 
-                combinedExpression = Expression.OrElse(combinedExpression, containsExpression);
+                if (combinedExpression == null)
+                {
+                    combinedExpression = containsExpression;
+                }
+                else
+                {
+                    combinedExpression = Expression.OrElse(combinedExpression, containsExpression);
+                }
             }
         }
 
-        // Verificar propriedades publicas de navegação
+        // Verificar propriedades de navegação
         var navigations = Context?.Model?.FindEntityType(typeof(T))?.GetNavigations();
         if (navigations != null)
         {
@@ -163,13 +173,19 @@ public abstract class BaseRepository<T> where T : class, new()
                             var containsMethod = typeof(string).GetMethod("Contains", new[] { typeof(string) });
                             var containsExpression = Expression.Call(property, containsMethod, Expression.Constant(searchParams, typeof(string)));
 
-                            combinedExpression = Expression.OrElse(combinedExpression, containsExpression);
+                            if (combinedExpression == null)
+                            {
+                                combinedExpression = containsExpression;
+                            }
+                            else
+                            {
+                                combinedExpression = Expression.OrElse(combinedExpression, containsExpression);
+                            }
                         }
                     }
                 }
             }
         }
-
         return Expression.Lambda<Func<T, bool>>(combinedExpression, parameter);
     }
 
