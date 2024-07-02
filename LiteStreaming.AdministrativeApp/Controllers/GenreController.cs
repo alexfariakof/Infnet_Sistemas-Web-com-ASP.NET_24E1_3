@@ -5,7 +5,7 @@ using LiteStreaming.Application.Abstractions;
 
 namespace LiteStreaming.AdministrativeApp.Controllers;
 
-public class GenreController : BaseController<GenreDto>
+public class GenreController : UnitControllerBase<GenreDto>
 {
     public GenreController(IService<GenreDto> genreService): base(genreService)  { }
         

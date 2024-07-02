@@ -35,9 +35,9 @@ public class PlaylistService : ServiceBase<PlaylistDto, Playlist>, IService<Play
         return result;
     }
 
-    public override List<PlaylistDto> FindAllSorted(string sortProperty = null, SortOrder sortOrder = 0)
+    public override List<PlaylistDto> FindAllOrdered(string serachParams = null, string orderProperty = null, SortOrder sortOrder = 0)
     {
-        var result = this.Mapper.Map<List<PlaylistDto>>(this.Repository.FindAllSorted(sortProperty, sortOrder));
+        var result = this.Mapper.Map<List<PlaylistDto>>(this.Repository.FindAllOrdered(serachParams, orderProperty, sortOrder));
         return result;
     }
 

@@ -8,7 +8,7 @@
       },
       "hotReloadEnabled": true,
       "dotnetRunMessages": true,
-      "applicationUrl": "http://localhost:5171;",
+      "applicationUrl": "https://localhost:7102;http://localhost:5171;",
       "nativeDebugging": true
     },
     "Default Development": {
@@ -19,7 +19,7 @@
       },
       "hotReloadEnabled": true,
       "dotnetRunMessages": true,
-      "applicationUrl": "https://localhost:7230;http://localhost:5171",
+      "applicationUrl": "https://localhost:7102;http://localhost:5171;",
       "nativeDebugging": true
     },
     "Docker": {

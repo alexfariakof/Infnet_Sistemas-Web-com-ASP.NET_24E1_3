@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using LiteStreaming.XunitTest.__mock__.Admin;
 using LiteStreaming.Application.Abstractions;
+using Microsoft.Data.SqlClient;
 
 namespace AdministrativeApp.Controllers;
 
@@ -30,15 +31,15 @@ public class FlatControllerTest
     {
         // Arrange
         var flatsDto = MockFlat.Instance.GetDtoListFromFlatList(MockFlat.Instance.GetListFaker());
-        flatServiceMock.Setup(service => service.FindAllSorted(null, 0)).Returns(flatsDto);
+        flatServiceMock.Setup(service => service.FindAllOrdered(It.IsAny<string?>(), It.IsAny<string?>(), It.IsAny<SortOrder>())).Returns(flatsDto);
 
         // Act
         var result = flatController.Index();
 
         // Assert
         var viewResult = Assert.IsType<ViewResult>(result);
-        var model = Assert.IsAssignableFrom<IEnumerable<FlatDto>>(viewResult.Model);
-        Assert.Equal(flatsDto, model);
+        var model = Assert.IsAssignableFrom<PagerModel>(viewResult.Model);
+        Assert.Equal(flatsDto, model.GetItems<FlatDto>());
     }
 
     [Fact]

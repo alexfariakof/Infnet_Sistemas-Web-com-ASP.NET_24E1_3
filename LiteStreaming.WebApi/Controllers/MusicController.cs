@@ -8,7 +8,7 @@ namespace WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class MusicController : ControllerBaseTokensProps
+public class MusicController : UnitControllerBase
 {
     private readonly IService<MusicDto> _musicService;
     public MusicController(IService<MusicDto> musicService)

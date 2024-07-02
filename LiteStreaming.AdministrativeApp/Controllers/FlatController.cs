@@ -6,7 +6,7 @@ using LiteStreaming.Application.Abstractions;
 
 namespace LiteStreaming.AdministrativeApp.Controllers;
 
-public class FlatController : BaseController<FlatDto>
+public class FlatController : UnitControllerBase<FlatDto>
 {
     public FlatController(IService<FlatDto> services): base(services)
     {

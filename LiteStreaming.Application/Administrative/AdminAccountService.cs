@@ -51,9 +51,9 @@ public class AdminAccountService : ServiceBase<AdminAccountDto, AdminAccount>, I
         return result;
     }
 
-    public override List<AdminAccountDto> FindAllSorted(string sortProperty = null, SortOrder sortOrder = 0)
+    public override List<AdminAccountDto> FindAllOrdered(string serachParams = null, string orderProperty = null, SortOrder sortOrder = 0)
     {
-        var result = this.Mapper.Map<List<AdminAccountDto>>(this.Repository.FindAllSorted(sortProperty, sortOrder));
+        var result = this.Mapper.Map<List<AdminAccountDto>>(this.Repository.FindAllOrdered(serachParams, orderProperty, sortOrder));
         return result;
     }
 

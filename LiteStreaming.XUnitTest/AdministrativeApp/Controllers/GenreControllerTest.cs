@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using LiteStreaming.XunitTest.__mock__.Admin;
 using LiteStreaming.Application.Abstractions;
+using Microsoft.Data.SqlClient;
 
 namespace AdministrativeApp.Controllers;
 
@@ -30,15 +31,15 @@ public class GenreControllerTest
     {
         // Arrange
         var genresDto = MockGenre.Instance.GetDtoListFromGenreList(MockGenre.Instance.GetListFaker());
-        genreServiceMock.Setup(service => service.FindAllSorted(null, 0)).Returns(genresDto);
+        genreServiceMock.Setup(service => service.FindAllOrdered(It.IsAny<string?>(), It.IsAny<string?>(), It.IsAny<SortOrder>())).Returns(genresDto);
 
         // Act
         var result = genreController.Index();
 
         // Assert
         var viewResult = Assert.IsType<ViewResult>(result);
-        var model = Assert.IsAssignableFrom<IEnumerable<GenreDto>>(viewResult.Model);
-        Assert.Equal(genresDto, model);
+        var model = Assert.IsAssignableFrom<PagerModel>(viewResult.Model);
+        Assert.Equal(genresDto, model.GetItems<GenreDto>());
     }
 
     [Fact]

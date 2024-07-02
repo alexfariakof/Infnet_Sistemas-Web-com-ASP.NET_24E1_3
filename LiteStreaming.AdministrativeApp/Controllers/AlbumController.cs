@@ -8,7 +8,7 @@ using LiteStreaming.Application.Core.Interfaces.Query;
 
 namespace LiteStreaming.AdministrativeApp.Controllers;
 
-public class AlbumController : BaseController<AlbumDto>
+public class AlbumController : UnitControllerBase<AlbumDto>
 {
     private readonly IFindAll<BandDto> bandService;
     private readonly IFindAll<GenreDto> genreService;

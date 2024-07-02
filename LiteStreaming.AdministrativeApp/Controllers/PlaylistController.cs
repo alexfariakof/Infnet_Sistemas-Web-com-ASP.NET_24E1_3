@@ -6,7 +6,7 @@ using LiteStreaming.Application.Abstractions;
 
 namespace LiteStreaming.AdministrativeApp.Controllers;
 
-public class PlaylistController : BaseController<PlaylistDto>
+public class PlaylistController : UnitControllerBase<PlaylistDto>
 {
     public PlaylistController(IService<PlaylistDto> playlistService): base(playlistService)  { }
 

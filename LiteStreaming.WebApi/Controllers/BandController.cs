@@ -8,7 +8,7 @@ namespace WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class BandController : ControllerBaseTokensProps
+public class BandController : UnitControllerBase
 {
     private readonly IService<BandDto> _bandService;
     public BandController(IService<BandDto> bandService)

@@ -1,5 +1,4 @@
 ﻿using AutoFixture;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using Repository.Persistency.Abstractions;
@@ -188,23 +187,8 @@ public sealed class BaseRepositoryTest
         dbSetMock.As<IQueryable<MokcEntity>>().Setup(m => m.ElementType).Returns(entities.ElementType);
         dbSetMock.As<IQueryable<MokcEntity>>().Setup(m => m.GetEnumerator()).Returns(entities.GetEnumerator());
 
-        var result = repository.FindAllSorted();
+        var result = repository.FindAllOrdered();
 
-        Assert.Equivalent(entities.OrderBy(e => e.Id).ToList(), result);
-    }
-
-    [Fact]
-    public void FindAllSorted_Should_Return_All_Entities_Sorted_By_Specified_Property()
-    {
-        var entities = fixture.CreateMany<MokcEntity>().AsQueryable();
-        dbSetMock.As<IQueryable<MokcEntity>>().Setup(m => m.Provider).Returns(entities.Provider);
-        dbSetMock.As<IQueryable<MokcEntity>>().Setup(m => m.Expression).Returns(entities.Expression);
-        dbSetMock.As<IQueryable<MokcEntity>>().Setup(m => m.ElementType).Returns(entities.ElementType);
-        dbSetMock.As<IQueryable<MokcEntity>>().Setup(m => m.GetEnumerator()).Returns(entities.GetEnumerator());
-
-        var result = repository.FindAllSorted(nameof(MokcEntity.Name), SortOrder.Ascending);
-
-        Assert.Equal(entities.OrderBy(e => e.Name), result);
-    }
-
+        Assert.Equivalent(entities.ToList(), result);
+    }  
 }

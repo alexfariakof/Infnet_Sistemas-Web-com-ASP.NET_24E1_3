@@ -6,7 +6,7 @@ using LiteStreaming.Application.Abstractions;
 
 namespace LiteStreaming.AdministrativeApp.Controllers;
 
-public class BandController : BaseController<BandDto>
+public class BandController : UnitControllerBase<BandDto>
 {
     public BandController(IService<BandDto> services): base(services) { }
 

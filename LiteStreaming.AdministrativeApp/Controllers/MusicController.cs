@@ -8,7 +8,7 @@ using LiteStreaming.Application.Abstractions;
 
 namespace LiteStreaming.AdministrativeApp.Controllers;
 
-public class MusicController : BaseController<MusicDto>
+public class MusicController : UnitControllerBase<MusicDto>
 {
     private readonly IFindAll<BandDto> bandService;
     private readonly IFindAll<GenreDto> genreService;

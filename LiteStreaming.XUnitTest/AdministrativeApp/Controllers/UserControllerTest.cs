@@ -6,6 +6,9 @@ using Moq;
 using LiteStreaming.AdministrativeApp.Controllers;
 using LiteStreaming.XunitTest.__mock__.Admin;
 using LiteStreaming.Application.Abstractions;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Application.Streaming.Dto;
+using Microsoft.Data.SqlClient;
 
 namespace AdministrativeApp.Controllers;
 
@@ -31,15 +34,15 @@ public class UserControllerTest
     {
         // Arrange
         var accounts = MockAdminAccount.Instance.GetFakerListDto();
-        administrativeAccountServiceMock.Setup(service => service.FindAllSorted(null, 0)).Returns(accounts);
+        administrativeAccountServiceMock.Setup(service => service.FindAllOrdered(It.IsAny<string?>(), It.IsAny<string?>(), It.IsAny<SortOrder>())).Returns(accounts);
 
         // Act
         var result = userController.Index();
 
         // Assert
         var viewResult = Assert.IsType<ViewResult>(result);
-        var model = Assert.IsAssignableFrom<IEnumerable<AdminAccountDto>>(viewResult.Model);
-        Assert.Equal(accounts, model);
+        var model = Assert.IsAssignableFrom<PagerModel>(viewResult.Model);
+        Assert.Equal(accounts, model.GetItems<AdminAccountDto>());
     }
 
     [Fact]

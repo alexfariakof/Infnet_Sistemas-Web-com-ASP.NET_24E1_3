@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using LiteStreaming.XunitTest.__mock__.Admin;
 using LiteStreaming.Application.Abstractions;
+using Microsoft.Data.SqlClient;
 
 namespace AdministrativeApp.Controllers;
 
@@ -30,15 +31,15 @@ public class PlaylistControllerTest
     {
         // Arrange
         var playlistsDto = MockPlaylist.Instance.GetDtoListFromPlaylistList(MockPlaylist.Instance.GetListFaker());
-        playlistServiceMock.Setup(service => service.FindAllSorted(null, 0)).Returns(playlistsDto);
+        playlistServiceMock.Setup(service => service.FindAllOrdered(It.IsAny<string?>(), It.IsAny<string?>(), It.IsAny<SortOrder>())).Returns(playlistsDto);
 
         // Act
         var result = playlistController.Index();
 
         // Assert
         var viewResult = Assert.IsType<ViewResult>(result);
-        var model = Assert.IsAssignableFrom<IEnumerable<PlaylistDto>>(viewResult.Model);
-        Assert.Equal(playlistsDto, model);
+        var model = Assert.IsAssignableFrom<PagerModel>(viewResult.Model);
+        Assert.Equal(playlistsDto, model.GetItems<PlaylistDto>());
     }
 
     [Fact]
