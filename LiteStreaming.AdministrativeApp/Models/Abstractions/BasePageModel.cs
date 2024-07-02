@@ -2,11 +2,11 @@
 public abstract class BasePageModel
 {
     private IEnumerable<object>? _items;
-    private int _count;
-    private int _pageIndex;
-    private int _pageSize;
+    private readonly int _count;
+    private readonly int _pageIndex;
+    private readonly int _pageSize;
     protected int TotalRecords { get; set; }
-    public BasePageModel(int count, int pageIndex, int pageSize)
+    protected BasePageModel(int count, int pageIndex, int pageSize)
     {
         _count = count;
         _pageIndex = pageIndex; 
