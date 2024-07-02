@@ -6,7 +6,7 @@ public class SortModel
 
     public SortOrder SortOrder { get; set; } = SortOrder.Ascending; 
     public string? SortParamName { get; set; } = "default_desc";
-    public string SortIcon { get; set; } = SortIcons.SORT_ICON_ASC;
+    public string SortIcon { get; set; } = SortIcons.SORT_ICON_DESC;
 }
 
 public static class SortIcons

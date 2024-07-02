@@ -33,7 +33,7 @@ public abstract class UnitControllerBase<T> : Controller where T : class, new()
         {
             sortModel.SortOrder  = SortOrder.Descending;
             sortModel.SortParamName  = $"{sortExpression.Replace("_desc", "").ToLower()}";
-            sortModel.SortIcon = SortIcons.SORT_ICON_DESC;
+            sortModel.SortIcon = SortIcons.SORT_ICON_ASC;
         }
         return sortModel;
     }
