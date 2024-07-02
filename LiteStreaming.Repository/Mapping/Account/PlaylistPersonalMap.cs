@@ -2,13 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 using Domain.Account.Agreggates;
 using Domain.Streaming.Agreggates;
-using Repository.Abstractions;
+using Repository.Constants;
 
 namespace Repository.Mapping.Account;
 public class PlaylistPersonalMap : IEntityTypeConfiguration<PlaylistPersonal>
 {
-    private readonly BaseConstants baseConstants;
-    public PlaylistPersonalMap(BaseConstants baseConstants) : base()
+    private readonly DefaultValueSqlConstants baseConstants;
+    public PlaylistPersonalMap(DefaultValueSqlConstants baseConstants) : base()
     {
         this.baseConstants = baseConstants;
     }
@@ -16,13 +16,9 @@ public class PlaylistPersonalMap : IEntityTypeConfiguration<PlaylistPersonal>
     public void Configure(EntityTypeBuilder<PlaylistPersonal> builder)
     {
         builder.ToTable(nameof(PlaylistPersonal));
-        builder.Property(playlist => playlist.Id).HasColumnType("binary(16)")
-        .HasConversion(
-            v => v.ToByteArray(),
-            v => new Guid(v)
-        )
-        .ValueGeneratedOnAdd();
+
         builder.HasKey(playlist => playlist.Id);
+        builder.Property(playlist => playlist.Id).ValueGeneratedOnAdd();
         builder.Property(playlist => playlist.Name).IsRequired().HasMaxLength(50);
         builder.Property(playlist => playlist.CustomerId).IsRequired();
         builder.Property(playlist => playlist.IsPublic).IsRequired();
