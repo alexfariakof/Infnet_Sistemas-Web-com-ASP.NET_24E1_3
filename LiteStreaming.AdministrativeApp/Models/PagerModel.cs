@@ -1,7 +1,6 @@
 ﻿namespace LiteStreaming.AdministrativeApp.Models;
 public class PagerModel: BasePageModel
 {
-    private PagerModel() { }    
     public int TotalItems { get; private  set; }
     public int CurrentPage {  get; private set; }
     public int PageSize { get; private set; }    
@@ -14,7 +13,7 @@ public class PagerModel: BasePageModel
     public string? SearchText { get; set; }
     public SortModel? SortModel { get; set; }
 
-    public PagerModel(int totalItems, int currentPage, int pageSizes = 5) 
+    public PagerModel(int totalItems, int currentPage, int pageSizes = 5) : base(totalItems, currentPage, pageSizes)
     {
         this.TotalItems = totalItems;
         this.CurrentPage = currentPage;

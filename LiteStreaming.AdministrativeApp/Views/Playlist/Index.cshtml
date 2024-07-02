@@ -21,13 +21,13 @@
             <tr>
                 <th scope="col" class="text-start">Backdrop</th>
                 <th scope="col" class="text-start">
-                    <a asp-action="Index" asp-route-sortExpression="@(Model.SortModel.SortParamName.ToString().Replace("_desc", "") !="name" ? "name_desc" : Model.SortModel.SortParamName)" asp-route-SearchText="@Model.SearchText">
-                        <i class="@(Model.SortModel.SortParamName.ToString().Replace("_desc", "") == "name" ? Model.SortModel.SortIcon : "bi bi-sort-alpha-up")">Nome</i>
+                    <a asp-action="Index" asp-route-sortExpression="@(Model.SortModel.SortParamName.ToString().Replace("_desc", "") !="name" ? "name_desc" : Model.SortModel.SortParamName)" asp-route-SearchText="@Model.SearchText" asp-route-pg="@Model.CurrentPage" asp-route-pageSize="@Model.PageSize">
+                        <i class="text-light @(Model.SortModel.SortParamName.ToString().Replace("_desc", "") == "name" ? Model.SortModel.SortIcon : "bi bi-sort-alpha-up")">Nome</i>
                     </a>
                 </th>
                 <th scope="col" class="text-start">
-                    <a asp-action="Index" asp-route-sortExpression="@(Model.SortModel.SortParamName.ToString().Replace("_desc", "") !="url" ? "url_desc" : Model.SortModel.SortParamName)" asp-route-SearchText="@Model.SearchText">
-                        <i class="@(Model.SortModel.SortParamName.ToString().Replace("_desc", "") == "url" ? Model.SortModel.SortIcon : "bi bi-sort-alpha-up")">URL</i>
+                    <a asp-action="Index" asp-route-sortExpression="@(Model.SortModel.SortParamName.ToString().Replace("_desc", "") !="url" ? "url_desc" : Model.SortModel.SortParamName)" asp-route-SearchText="@Model.SearchText" asp-route-pg="@Model.CurrentPage" asp-route-pageSize="@Model.PageSize">
+                        <i class="text-light @(Model.SortModel.SortParamName.ToString().Replace("_desc", "") == "url" ? Model.SortModel.SortIcon : "bi bi-sort-alpha-up")">URL</i>
                     </a>
                 </th>
                 <th scope="col">Actions</th>

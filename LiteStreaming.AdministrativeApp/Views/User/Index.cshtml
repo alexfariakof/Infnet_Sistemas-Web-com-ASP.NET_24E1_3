@@ -21,18 +21,18 @@
             <tr>
                 <th scope="col" class="visually-hidden">Id</th>
                 <th scope="col" class="text-start">
-                    <a asp-action="Index" asp-route-sortExpression="@(Model.SortModel.SortParamName.ToString().Replace("_desc", "") !="name" ? "name_desc" : Model.SortModel.SortParamName)" asp-route-SearchText="@Model.SearchText">
-                        <i class="@(Model.SortModel.SortParamName.ToString().Replace("_desc", "") == "name" ? Model.SortModel.SortIcon : "bi bi-sort-alpha-up")">Nome</i>
+                    <a asp-action="Index" asp-route-sortExpression="@(Model.SortModel.SortParamName.ToString().Replace("_desc", "") !="name" ? "name_desc" : Model.SortModel.SortParamName)" asp-route-SearchText="@Model.SearchText" asp-route-pg="@Model.CurrentPage" asp-route-pageSize="@Model.PageSize">
+                        <i class="text-light @(Model.SortModel.SortParamName.ToString().Replace("_desc", "") == "name" ? Model.SortModel.SortIcon : "bi bi-sort-alpha-up")">Nome</i>
                     </a>
                 </th>
                 <th scope="col" class="text-start">
-                    <a asp-action="Index" asp-route-sortExpression="@(Model.SortModel.SortParamName.ToString().Replace("_desc", "") != "email" ? "email_desc" : Model.SortModel.SortParamName)" asp-route-SearchText="@Model.SearchText">
-                        <i class="@(Model.SortModel.SortParamName.ToString().Replace("_desc", "") == "email" ? Model.SortModel.SortIcon : "bi bi-sort-alpha-up")">Email</i>
+                    <a asp-action="Index" asp-route-sortExpression="@(Model.SortModel.SortParamName.ToString().Replace("_desc", "") != "email" ? "email_desc" : Model.SortModel.SortParamName)" asp-route-SearchText="@Model.SearchText" asp-route-pg="@Model.CurrentPage" asp-route-pageSize="@Model.PageSize">
+                        <i class="text-light @(Model.SortModel.SortParamName.ToString().Replace("_desc", "") == "email" ? Model.SortModel.SortIcon : "bi bi-sort-alpha-up")">Email</i>
                     </a>
                 </th>
                 <th scope="col" class="text-start">
                     <a asp-action="Index" asp-route-sortExpression="@(Model.SortModel.SortParamName.ToString().Replace("_desc", "") !="description" ? "description_desc" : Model.SortModel.SortParamName)" asp-route-SearchText="@Model.SearchText">
-                        <i class="@(Model.SortModel.SortParamName.ToString().Replace("_desc", "") == "description" ? Model.SortModel.SortIcon : "bi bi-sort-alpha-up")">Perfil</i>
+                        <i class="text-light @(Model.SortModel.SortParamName.ToString().Replace("_desc", "") == "description" ? Model.SortModel.SortIcon : "bi bi-sort-alpha-up")">Perfil</i>
                     </a>
                 </th>
                 <th scope="col">Actions</th>
