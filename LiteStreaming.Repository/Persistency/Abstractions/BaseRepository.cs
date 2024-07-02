@@ -108,11 +108,10 @@ public abstract class BaseRepository<T> where T : class, new()
     /// <returns>Uma coleção ordenada de entidades.</returns>
     public virtual IEnumerable<T> FindAllSorted(string serachParams = null, string propertyToSort = null, SortOrder sortOrder = SortOrder.Ascending)
     {
-        Expression<Func<T, bool>>? serachExpression = GetSearchExpressionFromParams(serachParams);
+
+        Expression<Func<T, bool>> serachExpression = GetSearchExpressionFromParams(serachParams);
         if (propertyToSort is null)
         {
-            if (String.IsNullOrEmpty(serachParams))
-                return FindAll();
             return Context.Set<T>().Where(serachExpression).ToList();
         }
 
@@ -127,12 +126,12 @@ public abstract class BaseRepository<T> where T : class, new()
             return Context.Set<T>().Where(serachExpression).AsQueryable().OrderByDescending(sortExpression).ToList();
     }
 
-    private Expression<Func<T, bool>>? GetSearchExpressionFromParams(string searchParams)
+    private Expression<Func<T, bool>> GetSearchExpressionFromParams(string searchParams)
     {
         var parameter = Expression.Parameter(typeof(T), "x");
-        Expression? combinedExpression = null;
+        Expression combinedExpression = Expression.Constant(true); // Expressão padrão que sempre é verdadeira
 
-        // Verificar propriedades diretas da entidade T
+        // Verificar propriedades públicas da entidade T
         foreach (var prop in typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance))
         {
             if (prop.PropertyType == typeof(string))
@@ -141,14 +140,7 @@ public abstract class BaseRepository<T> where T : class, new()
                 var containsMethod = typeof(string).GetMethod("Contains", new[] { typeof(string) });
                 var containsExpression = Expression.Call(property, containsMethod, Expression.Constant(searchParams, typeof(string)));
 
-                if (combinedExpression == null)
-                {
-                    combinedExpression = containsExpression;
-                }
-                else
-                {
-                    combinedExpression = Expression.OrElse(combinedExpression, containsExpression);
-                }
+                combinedExpression = Expression.OrElse(combinedExpression, containsExpression);
             }
         }
 
@@ -170,27 +162,16 @@ public abstract class BaseRepository<T> where T : class, new()
                             var containsMethod = typeof(string).GetMethod("Contains", new[] { typeof(string) });
                             var containsExpression = Expression.Call(property, containsMethod, Expression.Constant(searchParams, typeof(string)));
 
-                            if (combinedExpression == null)
-                            {
-                                combinedExpression = containsExpression;
-                            }
-                            else
-                            {
-                                combinedExpression = Expression.OrElse(combinedExpression, containsExpression);
-                            }
+                            combinedExpression = Expression.OrElse(combinedExpression, containsExpression);
                         }
                     }
                 }
             }
         }
 
-        if (combinedExpression == null)
-        {
-            return null;
-        }
-
         return Expression.Lambda<Func<T, bool>>(combinedExpression, parameter);
     }
+
 
     /// <summary>
     /// Obtém uma expressão de ordenação com base na primeira propriedade pública da entidade.
