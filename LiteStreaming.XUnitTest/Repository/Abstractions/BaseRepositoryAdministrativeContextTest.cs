@@ -72,15 +72,15 @@ public class BaseRepositoryAdministrativeContextTest
     {
         // Arrange
         var repository = new TestRepository(contextMock.Object);
-        var entities = new List<AdminAccount> { new AdminAccount(), new AdminAccount() };
-        var dbSetMock = Usings.MockDbSet(entities);
+        var mockEntities = new List<AdminAccount> { new AdminAccount(), new AdminAccount() };
+        var dbSetMock = Usings.MockDbSet(mockEntities);
         contextMock.Setup(c => c.Set<AdminAccount>()).Returns(dbSetMock.Object);
 
         // Act
         var result = repository.FindAll();
 
         // Assert
-        Assert.Equal(entities.Count, result.Count());
+        Assert.Equal(mockEntities.Count, result.Count());
     }
 
     [Fact]
@@ -105,16 +105,17 @@ public class BaseRepositoryAdministrativeContextTest
     {
         // Arrange
         var repository = new TestRepository(contextMock.Object);
-        var entities = new List<AdminAccount> { new AdminAccount { Name = "Entity1" }, new AdminAccount { Name = "Entity2" } };
-        var dbSetMock = Usings.MockDbSet(entities);
+        var mockEntities = MockAdminAccount.Instance.GetListFaker();
+        var mockEntitie = mockEntities.First();
+        var dbSetMock = Usings.MockDbSet(mockEntities);
         contextMock.Setup(c => c.Set<AdminAccount>()).Returns(dbSetMock.Object);
 
         // Act
-        var result = repository.Find(e => e.Name == "Entity1");
+        var result = repository.Find(e => e.Name == mockEntitie.Name);
 
         // Assert
         Assert.Single(result);
-        Assert.Equal("Entity1", result.First().Name);
+        Assert.Equal(mockEntitie.Name, result.First().Name);
     }
 
     [Fact]
@@ -122,12 +123,13 @@ public class BaseRepositoryAdministrativeContextTest
     {
         // Arrange
         var repository = new TestRepository(contextMock.Object);
-        var entities = new List<AdminAccount> { new AdminAccount { Name = "Entity1" }, new AdminAccount { Name = "Entity2" } };
-        var dbSetMock = Usings.MockDbSet(entities);
+        var mockEntities = MockAdminAccount.Instance.GetListFaker();
+        var mockEntitie = mockEntities.First();
+        var dbSetMock = Usings.MockDbSet(mockEntities);
         contextMock.Setup(c => c.Set<AdminAccount>()).Returns(dbSetMock.Object);
 
         // Act
-        var result = repository.Exists(e => e.Name == "Entity1");
+        var result = repository.Exists(e => e.Name == mockEntitie.Name);
 
         // Assert
         Assert.True(result);
@@ -138,12 +140,13 @@ public class BaseRepositoryAdministrativeContextTest
     {
         // Arrange
         var repository = new TestRepository(contextMock.Object);
-        var entities = new List<AdminAccount> { new AdminAccount { Name = "Entity1" }, new AdminAccount { Name = "Entity2" } };
-        var dbSetMock = Usings.MockDbSet(entities);
+        var mockEntities = MockAdminAccount.Instance.GetListFaker();
+        var mockEntitie = mockEntities.Last();
+        var dbSetMock = Usings.MockDbSet(mockEntities);
         contextMock.Setup(c => c.Set<AdminAccount>()).Returns(dbSetMock.Object);
 
         // Act
-        var result = repository.Exists(e => e.Name == "Entity3");
+        var result = repository.Exists(e => e.Name == "mockEntitie.Name");
 
         // Assert
         Assert.False(result);
@@ -157,8 +160,8 @@ public class BaseRepositoryAdministrativeContextTest
         using (var context = new RegisterContextAdmin(options))
         {
             // Inserindo dados de exemplo no contexto
-            var entities = MockAdminAccount.Instance.GetListFaker();
-            context.Set<AdminAccount>().AddRange(entities);
+            var mockEntities = MockAdminAccount.Instance.GetListFaker();
+            context.Set<AdminAccount>().AddRange(mockEntities);
             context.SaveChanges();
 
             // Criando o repositório com o contexto real
@@ -168,7 +171,7 @@ public class BaseRepositoryAdministrativeContextTest
             var result = repository.FindAllSorted();
 
             // Assert
-            var sortedEntities = entities.ToList();
+            var sortedEntities = mockEntities.ToList();
             Assert.Equal(sortedEntities.Count, result.Count());
             Assert.Equal(sortedEntities.First().Id, result.First().Id);
             Assert.Equal(sortedEntities.Last().Id, result.Last().Id);
@@ -183,8 +186,8 @@ public class BaseRepositoryAdministrativeContextTest
         using (var context = new RegisterContextAdmin(options))
         {
             // Inserindo dados de exemplo no contexto
-            var entities = MockAdminAccount.Instance.GetListFaker();
-            context.Set<AdminAccount>().AddRange(entities);
+            var mockEntities = MockAdminAccount.Instance.GetListFaker();
+            context.Set<AdminAccount>().AddRange(mockEntities);
             context.SaveChanges();
 
             // Criando o repositório com o contexto real
@@ -194,7 +197,7 @@ public class BaseRepositoryAdministrativeContextTest
             var result = repository.FindAllSorted(null, nameof(AdminAccount.Name), SortOrder.Ascending);
 
             // Assert
-            var sortedEntities = entities.OrderBy(e => e.Name).ToList();
+            var sortedEntities = mockEntities.OrderBy(e => e.Name).ToList();
             Assert.Equal(sortedEntities.Count, result.Count());
             Assert.Equal(sortedEntities.First().Id, result.First().Id);
             Assert.Equal(sortedEntities.Last().Id, result.Last().Id);
@@ -209,8 +212,8 @@ public class BaseRepositoryAdministrativeContextTest
         using (var context = new RegisterContextAdmin(options))
         {
             // Inserindo dados de exemplo no contexto
-            var entities = MockAdminAccount.Instance.GetListFaker();
-            context.Set<AdminAccount>().AddRange(entities);
+            var mockEntities = MockAdminAccount.Instance.GetListFaker();
+            context.Set<AdminAccount>().AddRange(mockEntities);
             context.SaveChanges();
 
             // Criando o repositório com o contexto real
@@ -220,7 +223,7 @@ public class BaseRepositoryAdministrativeContextTest
             var result = repository.FindAllSorted(null, nameof(AdminAccount.Name), SortOrder.Descending);
 
             // Assert
-            var sortedEntities = entities.OrderByDescending(e => e.Name).ToList();
+            var sortedEntities = mockEntities.OrderByDescending(e => e.Name).ToList();
             Assert.Equal(sortedEntities.Count, result.Count());
             Assert.Equal(sortedEntities.First().Id, result.First().Id);
             Assert.Equal(sortedEntities.Last().Id, result.Last().Id);
@@ -236,8 +239,8 @@ public class BaseRepositoryAdministrativeContextTest
         using (var context = new RegisterContextAdmin(options))
         {
             // Inserindo dados de exemplo no contexto
-            var entities = MockAdminAccount.Instance.GetListFaker();
-            context.Set<AdminAccount>().AddRange(entities);
+            var mockEntities = MockAdminAccount.Instance.GetListFaker();
+            context.Set<AdminAccount>().AddRange(mockEntities);
             context.SaveChanges();
 
             // Criando o repositório com o contexto real
@@ -247,7 +250,7 @@ public class BaseRepositoryAdministrativeContextTest
             var result = repository.FindAllSorted(null, nameof(AdminAccount.Login.Email), SortOrder.Ascending);
 
             // Assert
-            var sortedEntities = entities.OrderBy(e => e.Login.Email).ToList();
+            var sortedEntities = mockEntities.OrderBy(e => e.Login.Email).ToList();
             Assert.Equal(sortedEntities.Count, result.Count());
             Assert.Equal(sortedEntities.First().Id, result.First().Id);
             Assert.Equal(sortedEntities.Last().Id, result.Last().Id);
@@ -262,8 +265,8 @@ public class BaseRepositoryAdministrativeContextTest
         using (var context = new RegisterContextAdmin(options))
         {
             // Inserindo dados de exemplo no contexto
-            var entities = MockAdminAccount.Instance.GetListFaker();
-            context.Set<AdminAccount>().AddRange(entities);
+            var mockEntities = MockAdminAccount.Instance.GetListFaker();
+            context.Set<AdminAccount>().AddRange(mockEntities);
             context.SaveChanges();
 
             // Criando o repositório com o contexto real
@@ -273,7 +276,7 @@ public class BaseRepositoryAdministrativeContextTest
             var result = repository.FindAllSorted(null, nameof(AdminAccount.Login.Email), SortOrder.Descending);
 
             // Assert
-            var sortedEntities = entities.OrderByDescending(e => e.Login.Email).ToList();
+            var sortedEntities = mockEntities.OrderByDescending(e => e.Login.Email).ToList();
             Assert.Equal(sortedEntities.Count, result.Count());
             Assert.Equal(sortedEntities.First().Id, result.First().Id);
             Assert.Equal(sortedEntities.Last().Id, result.Last().Id);

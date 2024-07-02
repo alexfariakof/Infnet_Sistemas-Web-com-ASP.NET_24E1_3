@@ -189,6 +189,6 @@ public sealed class BaseRepositoryTest
 
         var result = repository.FindAllSorted();
 
-        Assert.Equivalent(entities.OrderBy(e => e.Id).ToList(), result);
+        Assert.Equivalent(entities.ToList(), result);
     }  
 }

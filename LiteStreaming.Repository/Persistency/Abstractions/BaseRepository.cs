@@ -153,7 +153,7 @@ public abstract class BaseRepository<T> where T : class, new()
         }
 
         // Verificar propriedades de navegação
-        var navigations = Context.Model.FindEntityType(typeof(T))?.GetNavigations();
+        var navigations = Context?.Model?.FindEntityType(typeof(T))?.GetNavigations();
         if (navigations != null)
         {
             foreach (var navigation in navigations)
